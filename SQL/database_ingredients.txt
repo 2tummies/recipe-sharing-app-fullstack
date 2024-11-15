@@ -1,0 +1,28 @@
+All data is taken from https://fdc.nal.usda.gov/index.html
+
+Nutrient Data:
+-All nutrient values in Foundation Foods are based on analyses conducted by USDA under NFNAP or provided by other USDA units or external organizations. (https://fdc.nal.usda.gov/Foundation_Foods_Documentation.html)
+
+
+
+Proximates (200s, 900s*):
+-"Proximate component" refers to the following macronutrients: water (moisture), protein, total lipid (fat), total carbohydrate, and ash. (https://fdc.nal.usda.gov/Foundation_Foods_Documentation.html)
+    Water
+    Nitrogen
+    Energy (kcal)
+    Protein
+    Total Lipid
+    Ash
+    Carbohydrates:
+
+Organic Acids:
+
+Vitamins and Other Components (400s*):
+
+Minerals (300s*):
+
+Lipids (600s, 800s*):
+
+Amino Acids (500s):
+
+Isoflavones (700s):
