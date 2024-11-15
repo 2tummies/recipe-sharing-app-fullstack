@@ -5,7 +5,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 import TextElement from '../shared/TextElement'
 import CookingMethodsSection from './CookingMethodsSection'
-import api from '../../api/api'
+import { getAllCookingMethods } from '../../api/calls/CookingMethodsApi'
 
 import GlobalStyles from '../../styles/GlobalStyles'
 import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
@@ -22,18 +22,12 @@ const CookingMethodsWrapper = ({
     const dupeException = 'Already added'
 
     useEffect(() => {
-        getCookingMethods()
+        const fetchCookingMethods = async () => {
+            const fetchedCookingMethods = await getAllCookingMethods()
+            setCookingMethods(fetchedCookingMethods) 
+        }
+        fetchCookingMethods()
     }, [])
-
-    const getCookingMethods = () => {
-        api.get('/meal_planner_connection/cooking_methods')
-        .then((res) => {
-            setCookingMethods(prevItems => [...prevItems, ...res.data])
-        })
-        .catch((error) => {
-            alert(error)
-        })
-    }
 
     const addCookingMethod = (e) => {
         if (!cookingMethodsList.includes(e)) {

@@ -5,7 +5,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 import TextElement from '../shared/TextElement'
 import IngredientsSection from './IngredientsSection'
-import { getAllIngredients } from '../../api/ingredient/IngredientApi'
+import { getAllIngredients } from '../../api/calls/IngredientApi'
 
 import GlobalStyles from '../../styles/GlobalStyles'
 import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
@@ -18,24 +18,17 @@ const IngredientsWrapper = ({
 }) => {
     const { control } = useForm()
     const [ ingredients, setIngredients] = useState([])
-    const [ recipeIngredientToAdd, setRecipeIngredientToAdd] = useState([])
+    // const [ recipeIngredientToAdd, setRecipeIngredientToAdd] = useState([])
 
     const dupeException = 'Already added'
 
     useEffect(() => {
-        // getIngredients()
-        setIngredients(getAllIngredients())
+        const fetchIngredients = async () => {
+            const fetchedIngredients = await getAllIngredients()
+            setIngredients(fetchedIngredients) 
+        }
+        fetchIngredients()
     }, [])
-
-    // const getIngredients = () => {
-        // api.get('/meal_planner_connection/ingredients')
-        // .then((res) => {
-        //     setIngredients(prevItems => [...prevItems, ...res.data])
-        // })
-        // .catch((error) => {
-        //     alert(error)
-        // })
-    // }
 
     const addIngredient = (ingredient) => {
         ingredToAdd = {

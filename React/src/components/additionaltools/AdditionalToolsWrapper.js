@@ -5,7 +5,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 import TextElement from '../shared/TextElement'
 import AdditionalToolSection from './AdditionalToolsSection'
-import api from '../../api/api'
+import { getAllAdditionalTools } from '../../api/calls/AdditionalToolsApi'
 
 import GlobalStyles from '../../styles/GlobalStyles'
 import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
@@ -22,18 +22,12 @@ const AdditionalToolsWrapper = ({
     const dupeException = 'Already added'
 
     useEffect(() => {
-        getAdditionalTools()
+        const fetchAdditionalTools = async () => {
+            const fetchedAdditionalTools = await getAllAdditionalTools()
+            setAdditionalTools(fetchedAdditionalTools) 
+        }
+        fetchAdditionalTools()
     }, [])
-
-    const getAdditionalTools = () => {
-        api.get('/meal_planner_connection/additional_tools')
-        .then((res) => {
-            setAdditionalTools(prevItems => [...prevItems, ...res.data])
-        })
-        .catch((error) => {
-            alert(error)
-        })
-    }
 
     const addAdditionalTool = (e) => {
         if (!additionalToolsList.includes(e)) {
