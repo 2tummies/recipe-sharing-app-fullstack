@@ -3,12 +3,12 @@ import { View, Text } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import SelectDropdown from 'react-native-select-dropdown'
 
-import TextElement from '../shared/TextElement'
+import TextElement from '../../sharedcomponents/TextElement'
 import IngredientsSection from './IngredientsSection'
-import { getAllIngredients } from '../../api/calls/IngredientApi'
+import { getAllIngredients } from '../../../api/calls/IngredientApi'
 
-import GlobalStyles from '../../styles/GlobalStyles'
-import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
+import GlobalStyles from '../../../styles/GlobalStyles'
+import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
 const IngredientsWrapper = ({
     isForm,

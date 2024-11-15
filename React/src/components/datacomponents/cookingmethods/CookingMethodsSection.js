@@ -1,9 +1,9 @@
 import { Pressable, Text, View } from 'react-native'
 
-import TextElement from '../shared/TextElement'
+import TextElement from '../../sharedcomponents/TextElement'
 import CookingMethod from './CookingMethod'
 
-import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
+import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
 const CookingMethodsSection = ({
     isForm,

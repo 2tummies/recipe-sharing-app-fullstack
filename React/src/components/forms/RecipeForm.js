@@ -3,17 +3,17 @@ import { useForm, Controller } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 
 // Components
-import PressableButton from '../shared/PressableButton'
-import TextElement from '../shared/TextElement'
+import PressableButton from '../sharedcomponents/PressableButton'
+import TextElement from '../sharedcomponents/TextElement'
 
-import RecipeName from '../recipes/RecipeName'
-import RecipeDescription from '../recipes/RecipeDescription'
-import RecipePrepTime from '../recipes/RecipePrepTime'
-import RecipeCookTime from '../recipes/RecipeCookTime'
-import RecipeTagsWrapper from '../recipetags/RecipeTagsWrapper'
-import CookingMethodsWrapper from '../cookingmethods/CookingMethodsWrapper'
-import AdditionalToolsWrapper from '../additionaltools/AdditionalToolsWrapper'
-import IngredientsWrapper from '../ingredients/IngredientsWrapper'
+import RecipeName from '../datacomponents/recipes/RecipeName'
+import RecipeDescription from '../datacomponents/recipes/RecipeDescription'
+import RecipePrepTime from '../datacomponents/recipes/RecipePrepTime'
+import RecipeCookTime from '../datacomponents/recipes/RecipeCookTime'
+import RecipeTagsWrapper from '../datacomponents/recipetags/RecipeTagsWrapper'
+import CookingMethodsWrapper from '../datacomponents/cookingmethods/CookingMethodsWrapper'
+import AdditionalToolsWrapper from '../datacomponents/additionaltools/AdditionalToolsWrapper'
+import IngredientsWrapper from '../datacomponents/ingredients/IngredientsWrapper'
 
 // Styles
 import GlobalStyles from '../../styles/GlobalStyles'

@@ -3,11 +3,11 @@ import { Text, View, TextInput } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import SelectDropdown from 'react-native-select-dropdown'
 
-import TextElement from '../shared/TextElement'
-import { getAllMeasurementUnits } from '../../api/calls/MeasurementUnitsApi'
+import TextElement from '../../sharedcomponents/TextElement'
+import { getAllMeasurementUnits } from '../../../api/calls/MeasurementUnitsApi'
 
-import GlobalStyles from '../../styles/GlobalStyles'
-import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
+import GlobalStyles from '../../../styles/GlobalStyles'
+import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
 const Ingredient = ({
     ingredientsList,

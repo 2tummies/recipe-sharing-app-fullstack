@@ -1,4 +1,4 @@
-import TextElement from '../shared/TextElement'
+import TextElement from '../../sharedcomponents/TextElement'
 
 const RecipeTag = ({
     tagName

@@ -2,30 +2,30 @@ import { useState } from 'react'
 import { View, TextInput } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 
-import TextElement from '../shared/TextElement'
+import TextElement from '../../sharedcomponents/TextElement'
 
-import GlobalStyles from '../../styles/GlobalStyles'
+import GlobalStyles from '../../../styles/GlobalStyles'
 
-const RecipeName = ({
+const RecipeDescription = ({
     isForm,
-    recipeName,
-    setRecipeName
+    recipeDescription,
+    setRecipeDescription
 }) => {
     const { control } = useForm()
     const [ value, setValue ] = useState('')
 
     const handleChange = (value) => {
         setValue(value)
-        setRecipeName(value)
+        setRecipeDescription(value)
     }
-
+    
     return (
         <>
             <View style={GlobalStyles.subsectionHeader}>
-                <TextElement textValue='Recipe Name' textStyle='xl' />
+                <TextElement textValue='Recipe Description' textStyle='xl' />
             </View>
             <Controller
-                name='create-recipe-name'
+                name='create-recipe-description'
                 control={control}
                 rules={{
                     required : true
@@ -34,7 +34,7 @@ const RecipeName = ({
                     return (
                         <TextInput
                             style={GlobalStyles.formInputTextField}
-                            placeholder='Name'
+                            placeholder='Description'
                             onChangeText={handleChange}
                             value={value}
                             required
@@ -46,4 +46,4 @@ const RecipeName = ({
     )
 }
 
-export default RecipeName
+export default RecipeDescription

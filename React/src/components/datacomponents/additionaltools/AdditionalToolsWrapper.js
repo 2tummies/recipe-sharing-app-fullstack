@@ -3,35 +3,35 @@ import { View, Text } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import SelectDropdown from 'react-native-select-dropdown'
 
-import TextElement from '../shared/TextElement'
-import RecipeTagsSection from './RecipeTagsSection'
-import { getAllRecipeTags } from '../../api/calls/RecipeTagsApi'
+import TextElement from '../../sharedcomponents/TextElement'
+import AdditionalToolSection from './AdditionalToolsSection'
+import { getAllAdditionalTools } from '../../../api/calls/AdditionalToolsApi'
 
-import GlobalStyles from '../../styles/GlobalStyles'
-import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
+import GlobalStyles from '../../../styles/GlobalStyles'
+import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
-const RecipeTagsWrapper = ({
+const AdditionalToolsWrapper = ({
     isForm,
-    recipeTagsList,
-    handleAddRecipeTag,
-    handleRemoveRecipeTag
+    additionalToolsList,
+    handleAddAdditionalTool,
+    handleRemoveAdditionalTool
 }) => {
     const { control } = useForm()
-    const [ recipeTags, setRecipeTags ] = useState([])
-
+    const [ additionalTools, setAdditionalTools ] = useState([])
+    
     const dupeException = 'Already added'
 
     useEffect(() => {
-        const fetchRecipeTags = async () => {
-            const fetchedRecipeTags = await getAllRecipeTags()
-            setRecipeTags(fetchedRecipeTags) 
+        const fetchAdditionalTools = async () => {
+            const fetchedAdditionalTools = await getAllAdditionalTools()
+            setAdditionalTools(fetchedAdditionalTools) 
         }
-        fetchRecipeTags()
+        fetchAdditionalTools()
     }, [])
 
-    const addRecipeTag = (e) => {
-        if (!recipeTagsList.includes(e)) {
-            handleAddRecipeTag(e)
+    const addAdditionalTool = (e) => {
+        if (!additionalToolsList.includes(e)) {
+            handleAddAdditionalTool(e)
         } else {
             throw dupeException
         }
@@ -40,28 +40,28 @@ const RecipeTagsWrapper = ({
     return (
         <>
             <View style={GlobalStyles.subsectionHeader}>
-                <TextElement textValue='Recipe Tags' textStyle='xl' />
+                <TextElement textValue='Additional Tools' textStyle='xl' />
             </View>
-            <RecipeTagsSection
+            <AdditionalToolSection
                 isForm={isForm}
-                recipeTagsList={recipeTagsList}
-                handleRemoveRecipeTag={handleRemoveRecipeTag}
+                additionalToolsList={additionalToolsList}
+                handleRemoveAdditionalTool={handleRemoveAdditionalTool}
             />
-            <Controller 
-                name='create-recipe-tags-list'
+            <Controller
+                name='create-additional-tools-list'
                 control={control}
                 render={({ field: { onChange, value=[] } }) => {
                     return (
                         <SelectDropdown
-                            data={recipeTags}
+                            data={additionalTools}
                             onSelect={(selectedItem, index) => {
-                                addRecipeTag(selectedItem)
+                                addAdditionalTool(selectedItem)
                                 onChange([...value, selectedItem])
                             }}
                             renderButton={(selectedItem, isOpened) => {
                                 return (
                                     <View style={ComponentStyles.pressableButtonBubbled}>
-                                        <TextElement textValue='Add Recipe Tag' />
+                                        <TextElement textValue='Add Additional Tools' />
                                     </View>
                                 )
                             }}
@@ -81,4 +81,4 @@ const RecipeTagsWrapper = ({
     )
 }
 
-export default RecipeTagsWrapper
+export default AdditionalToolsWrapper
