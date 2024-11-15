@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import { View, TextInput } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
+
+import TextElement from '../shared/TextElement'
 
 import GlobalStyles from '../../styles/GlobalStyles'
 
@@ -9,6 +12,12 @@ const RecipePrepTime = ({
     setRecipePrepTime
 }) => {
     const { control } = useForm()
+    const [ value, setValue ] = useState('')
+
+    const handleChange = (value) => {
+            setValue(value)
+            setRecipePrepTime(value)
+    }
 
     return (
         <>
@@ -21,16 +30,14 @@ const RecipePrepTime = ({
                 rules={{
                     required : true
                 }}
-                render={({field: {onChange, value}}) => {
+                render={({field: {value}}) => {
                     return (
                         <TextInput
                             style={GlobalStyles.formInputTextField}
                             placeholder='Time'
-                            onChangeText={onChange}
+                            onChangeText={handleChange}
                             value={value}
-                            onBlur={() => {
-                                setRecipePrepTime(value)
-                            }}
+                            required
                         />
                     )
                 }}

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { View, TextInput } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 
@@ -11,6 +12,12 @@ const RecipeDescription = ({
     setRecipeDescription
 }) => {
     const { control } = useForm()
+    const [ value, setValue ] = useState('')
+
+    const handleChange = (value) => {
+        setValue(value)
+        setRecipeDescription(value)
+    }
     
     return (
         <>
@@ -23,16 +30,13 @@ const RecipeDescription = ({
                 rules={{
                     required : true
                 }}
-                render={({field: {onChange, onBlur, value}}) => {
+                render={({field: {value}}) => {
                     return (
                         <TextInput
                             style={GlobalStyles.formInputTextField}
                             placeholder='Description'
-                            onChangeText={onChange}
+                            onChangeText={handleChange}
                             value={value}
-                            onBlur={() => {
-                                setRecipeDescription(value)
-                            }}
                             required
                         />
                     )

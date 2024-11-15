@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import SelectDropdown from 'react-native-select-dropdown'
 
 import TextElement from '../shared/TextElement'
-import api from '../../api/api'
+import { getAllMeasurementUnits } from '../../api/calls/MeasurementUnitsApi'
 
 import GlobalStyles from '../../styles/GlobalStyles'
 import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
@@ -14,21 +14,16 @@ const Ingredient = ({
     ingredient
 }) => {
     const { control } = useForm()
+    const [ value, setValue ] = useState('')
     const [ measurementUnits, setMeasurementUnits ] = useState([])
 
     useEffect(() => {
-        getMeasurementUnits()
+        const fetchMeasurementUnits = async () => {
+            const fetchedMeasurementUnits = await getAllMeasurementUnits()
+            setMeasurementUnits(fetchedMeasurementUnits) 
+        }
+        fetchMeasurementUnits()
     }, [])
-
-    const getMeasurementUnits = () => {
-        api.get('/meal_planner_connection/measurement_units')
-        .then((res) => {
-            setMeasurementUnits(prevItems => [...prevItems, ...res.data])
-        })
-        .catch((error) => {
-            alert(error)
-        })
-    }
 
     const addMeasurementUnit = (e) => {
         ingredientsList.map((item) => {
@@ -38,7 +33,8 @@ const Ingredient = ({
         })
     }
 
-    const handleBlur = () => {
+    const handleChange = (value) => {
+        setValue(value)
         ingredientsList.map((item) => {
             if (ingredient.id === item.id) {
                 item['measurementQuantity'] = value
@@ -96,14 +92,13 @@ const Ingredient = ({
                     rules={{
                         required : true
                     }}
-                    render={({field: {onChange, value}}) => {
+                    render={({field: {value}}) => {
                         return (
                             <TextInput
                                 style={GlobalStyles.formInputTextField}
                                 placeholder='Qty'
-                                onChangeText={onChange}
+                                onChangeText={handleChange}
                                 value={value}
-                                onBlur={handleBlur}
                                 required
                             />
                         )

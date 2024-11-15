@@ -5,7 +5,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 import TextElement from '../shared/TextElement'
 import RecipeTagsSection from './RecipeTagsSection'
-import api from '../../api/api'
+import { getAllRecipeTags } from '../../api/calls/RecipeTagsApi'
 
 import GlobalStyles from '../../styles/GlobalStyles'
 import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
@@ -22,18 +22,12 @@ const RecipeTagsWrapper = ({
     const dupeException = 'Already added'
 
     useEffect(() => {
-        getRecipeTags()
+        const fetchRecipeTags = async () => {
+            const fetchedRecipeTags = await getAllRecipeTags()
+            setRecipeTags(fetchedRecipeTags) 
+        }
+        fetchRecipeTags()
     }, [])
-
-    const getRecipeTags = () => {
-        api.get('/meal_planner_connection/recipe_tags')
-        .then((res) => {
-            setRecipeTags(prevItems => [...prevItems, ...res.data])
-        })
-        .catch((error) => {
-            alert(error)
-        })
-    }
 
     const addRecipeTag = (e) => {
         if (!recipeTagsList.includes(e)) {

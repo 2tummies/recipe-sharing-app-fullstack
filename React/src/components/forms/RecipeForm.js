@@ -125,7 +125,7 @@ const AddRecipeForm = ({redirOnSubmit}) => {
                     <RecipeCookTime
                         isForm={isForm}
                         recipeCookTime={setRecipeCookTime}
-                        setRecipePrepTime={setRecipePrepTime}
+                        setRecipeCookTime={setRecipeCookTime}
                     />
                 </View>
             </View>
