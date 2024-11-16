@@ -40,11 +40,7 @@ const IngredientsWrapper = ({
                 throw dupeException
             }
         })
-        // if (!ingredientsList.some(ingredient => {ingredient.ingredient_id === ingredToAdd.ingredient_id})) {
         handleAddIngredient(ingredToAdd)
-        // } else {
-        //     throw dupeException
-        // }
     }
 
     return (
