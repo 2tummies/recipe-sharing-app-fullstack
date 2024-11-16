@@ -1,5 +1,5 @@
-import {  useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import { useEffect, useState } from 'react'
+import { View } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import SelectDropdown from 'react-native-select-dropdown'
 
@@ -18,7 +18,6 @@ const IngredientsWrapper = ({
 }) => {
     const { control } = useForm()
     const [ ingredients, setIngredients] = useState([])
-    // const [ recipeIngredientToAdd, setRecipeIngredientToAdd] = useState([])
 
     const dupeException = 'Already added'
 
@@ -32,15 +31,20 @@ const IngredientsWrapper = ({
 
     const addIngredient = (ingredient) => {
         ingredToAdd = {
-            id: ingredient[0],
-            value: ingredient[1],
-            calories: ingredient[2],
+            ingredient_id: ingredient[0],
+            ingredient_value: ingredient[1],
+            calories_per_hundred: ingredient[2],
         }
-        if (!ingredientsList.some(ingredient => {ingredient.id === ingredToAdd.id})) {
-            handleAddIngredient(ingredToAdd)
-        } else {
-            throw dupeException
-        }
+        ingredientsList.map(item => {
+            if (item.ingredient_id === ingredToAdd.ingredient_id) {
+                throw dupeException
+            }
+        })
+        // if (!ingredientsList.some(ingredient => {ingredient.ingredient_id === ingredToAdd.ingredient_id})) {
+        handleAddIngredient(ingredToAdd)
+        // } else {
+        //     throw dupeException
+        // }
     }
 
     return (
@@ -77,7 +81,7 @@ const IngredientsWrapper = ({
                             renderItem={(item, index, isSelected) => {
                                 return (
                                     <>
-                                        <Text>{item[1]}</Text>
+                                        <TextElement textValue={item[1]} />
                                     </>
                                 )
                             }}

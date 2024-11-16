@@ -2,6 +2,7 @@ import { Pressable, Text, View } from 'react-native'
 
 import TextElement from '../../sharedcomponents/TextElement'
 import Ingredient from './Ingredient'
+import RemoveItemX from '../../sharedcomponents/RemoveItemX'
 
 import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
@@ -12,13 +13,13 @@ const IngredientsSection = ({
 }) => {
     const ingredientArray = ingredientsList.map(ingredient => {
         return (
-            <View key={ingredient.id}>
+            <View key={ingredient.ingredient_id} style={ComponentStyles.arrayItemWrapper}>
                 {
                     isForm ?
-                    <Pressable onPress={() => handleRemoveIngredient(ingredient)}>
+                    <>
                         <Ingredient ingredient={ingredient} isForm={isForm} ingredientsList={ingredientsList} />
-                        {/* <Text>X</Text> */}
-                    </Pressable>
+                        <RemoveItemX removeFunction={() => handleRemoveIngredient(ingredient)}/>
+                    </>
                     :
                     <Ingredient ingredient={ingredient} />
                 }
@@ -30,11 +31,11 @@ const IngredientsSection = ({
         <>
             {
                 ingredientArray.length ?
-                <View>
+                <>
                     {ingredientArray}
-                </View>
+                </>
                 :
-                <View style={ComponentStyles.itemBubbleDefaultText}>
+                <View style={ComponentStyles.itemDefaultText}>
                     <TextElement textValue='Ingredients will go here' textStyle='sm' />
                 </View>
             }

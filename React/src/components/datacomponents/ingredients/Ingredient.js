@@ -10,6 +10,7 @@ import GlobalStyles from '../../../styles/GlobalStyles'
 import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
 const Ingredient = ({
+    isForm,
     ingredientsList,
     ingredient
 }) => {
@@ -27,7 +28,7 @@ const Ingredient = ({
 
     const addMeasurementUnit = (e) => {
         ingredientsList.map((item) => {
-            if (ingredient.id === item.id) {
+            if (ingredient.ingredient_id === item.ingredient_id) {
                 item['measurementUnit'] = e[1]
             }
         })
@@ -36,7 +37,7 @@ const Ingredient = ({
     const handleChange = (value) => {
         setValue(value)
         ingredientsList.map((item) => {
-            if (ingredient.id === item.id) {
+            if (ingredient.ingredient_id === item.ingredient_id) {
                 item['measurementQuantity'] = value
             }
         })
@@ -45,7 +46,7 @@ const Ingredient = ({
     return (
         <View style={ComponentStyles.ingredientItemWrapper}>
             <View style={ComponentStyles.ingredientItemName}>
-                <Text>{ingredient.value}</Text>
+                <Text>{ingredient.ingredient_value}</Text>
             </View>
             <View style={ComponentStyles.ingredientItemMeasurementUnitWrapper}>
                 <Controller

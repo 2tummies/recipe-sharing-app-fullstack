@@ -34,7 +34,7 @@ const AdditionalToolSection = ({
                     {toolArray}
                 </View>
                 :
-                <View style={ComponentStyles.itemBubbleDefaultText}>
+                <View style={ComponentStyles.itemDefaultText}>
                     <TextElement textValue='Additional tools will go here' textStyle='sm' />
                 </View>
             }

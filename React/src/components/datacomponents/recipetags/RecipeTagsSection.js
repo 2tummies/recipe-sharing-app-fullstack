@@ -34,7 +34,7 @@ const RecipeTagsSection = ({
                     {tagArray}
                 </View>
                 :
-                <View style={ComponentStyles.itemBubbleDefaultText}>
+                <View style={ComponentStyles.itemDefaultText}>
                     <TextElement textValue='Added tags will go here' textStyle='sm' />
                 </View>
             }

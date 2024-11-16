@@ -34,7 +34,7 @@ const CookingMethodsSection = ({
                     {methodArray}
                 </View>
                 :
-                <View style={ComponentStyles.itemBubbleDefaultText}>
+                <View style={ComponentStyles.itemDefaultText}>
                     <TextElement textValue='Added cooking methods will go here' textStyle='sm' />
                 </View>
             }

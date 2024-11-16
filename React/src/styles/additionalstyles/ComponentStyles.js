@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native'
 
 const ComponentStyles = StyleSheet.create({
+    arrayItemWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        marginVertical: $spacingsmall
+    },
     flexItemsRow: {
         display: 'flex',
         flexDirection: 'row',
@@ -9,6 +15,7 @@ const ComponentStyles = StyleSheet.create({
         padding: $spacingbase,
     },
     ingredientItemWrapper: {
+        width: '90%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -26,7 +33,21 @@ const ComponentStyles = StyleSheet.create({
         borderRadius: $borderradiusbase,
         borderWidth: $borderwidthbase,
         marginRight: $spacingsmall,
-        padding: $spacingbase
+        justifyContent: 'center',
+        padding: $spacingbase,
+    },
+    instructionItemWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '90%',
+    },
+    instructionItemStep: {
+        width: '10%',
+        paddingLeft: $spacingsmall,
+    },
+    instructionItemText: {
+        width: '90%',
     },
     itemBubble: {
         display: 'flex',
@@ -48,7 +69,7 @@ const ComponentStyles = StyleSheet.create({
         opacity: .4,
         marginLeft: $spacingextralarge
     },
-    itemBubbleDefaultText: {
+    itemDefaultText: {
         marginVertical: $spacingsmall,
         opacity: .8
     },
@@ -100,6 +121,18 @@ const ComponentStyles = StyleSheet.create({
     pressableButtonText: {
         textAlign: 'center',
         fontWeight: $fontweightheavy,
+    },
+    removeButton: {
+        width: '10%',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
+    removeButtonText: {
+        borderRadius: $borderradiuslessrounded,
+        borderWidth: $borderwidthbase,
+        textAlign: 'center',
+        padding: $spacingextrasmall,
+        aspectRatio: 1
     },
 })
 

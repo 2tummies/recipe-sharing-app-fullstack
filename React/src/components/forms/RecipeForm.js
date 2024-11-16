@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 
 // Components
 import PressableButton from '../sharedcomponents/PressableButton'
-import TextElement from '../sharedcomponents/TextElement'
 
 import RecipeName from '../datacomponents/recipes/RecipeName'
 import RecipeDescription from '../datacomponents/recipes/RecipeDescription'
@@ -14,6 +13,7 @@ import RecipeTagsWrapper from '../datacomponents/recipetags/RecipeTagsWrapper'
 import CookingMethodsWrapper from '../datacomponents/cookingmethods/CookingMethodsWrapper'
 import AdditionalToolsWrapper from '../datacomponents/additionaltools/AdditionalToolsWrapper'
 import IngredientsWrapper from '../datacomponents/ingredients/IngredientsWrapper'
+import InstructionsWrapper from '../datacomponents/instructions/InstructionsWrapper'
 
 // Styles
 import GlobalStyles from '../../styles/GlobalStyles'
@@ -32,6 +32,7 @@ const AddRecipeForm = ({redirOnSubmit}) => {
     const [ recipeTagsList, setRecipeTagsList ] = useState([])
     const [ cookingMethodsList, setCookingMethodsList ] = useState([])
     const [ additionalToolsList, setAdditionalToolsList ] = useState([])
+    const [ instructionsList, setInstructionsList ] = useState([])
 
     useEffect(() => {
         initForm()
@@ -83,7 +84,8 @@ const AddRecipeForm = ({redirOnSubmit}) => {
             cookingMethods: cookingMethodsList,
             additionalTools: additionalToolsList,
             recipeTags: recipeTagsList,
-            ingredients: ingredientsList
+            ingredients: ingredientsList,
+            instructions: instructionsList,
         }
         try {
             console.log(finalData)
@@ -159,6 +161,13 @@ const AddRecipeForm = ({redirOnSubmit}) => {
                     ingredientsList={ingredientsList}
                     handleAddIngredient={handleAddIngredient}
                     handleRemoveIngredient={handleRemoveIngredient}
+                />
+            </View>
+            <View style={GlobalStyles.formItem}>
+                <InstructionsWrapper
+                    isForm={isForm}
+                    instructionsList={instructionsList}
+                    setInstructionsList={setInstructionsList}
                 />
             </View>
             <View style={styles.buttonWrapper}>
