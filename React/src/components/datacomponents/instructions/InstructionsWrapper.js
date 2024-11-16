@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { Pressable, View, Text } from 'react-native'
+import { View } from 'react-native'
 
 import TextElement from '../../sharedcomponents/TextElement'
 import PressableButton from '../../sharedcomponents/PressableButton'

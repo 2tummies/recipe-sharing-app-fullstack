@@ -10,7 +10,6 @@ import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 const Instruction = ({
     isForm,
     instruction,
-    instructionsList,
     setInstructionsList
 }) => {
     const { control } = useForm()

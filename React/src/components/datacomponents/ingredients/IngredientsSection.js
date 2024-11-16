@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import TextElement from '../../sharedcomponents/TextElement'
 import Ingredient from './Ingredient'

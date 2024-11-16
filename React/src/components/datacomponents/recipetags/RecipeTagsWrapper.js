@@ -1,4 +1,4 @@
-import {  useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import SelectDropdown from 'react-native-select-dropdown'
