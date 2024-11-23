@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 import TextElement from '../../sharedcomponents/TextElement'
 import Ingredient from './Ingredient'
@@ -13,7 +13,7 @@ const IngredientsSection = ({
 }) => {
     const ingredientArray = ingredientsList.map(ingredient => {
         return (
-            <View key={ingredient.ingredient_id} style={ComponentStyles.arrayItemWrapper}>
+            <View key={ingredient.id} style={ComponentStyles.arrayItemWrapper}>
                 {
                     isForm ?
                     <>

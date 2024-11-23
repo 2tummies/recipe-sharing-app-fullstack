@@ -127,6 +127,18 @@ const ComponentStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-end',
     },
+    recipeListItem: {
+        borderRadius: $borderradiusmorerounded,
+        borderWidth: $borderwidthbase,
+        borderStyle: 'solid',
+        borderColor: $greendarkforest,
+        display: 'flex',
+        alignItems: 'flex-start',
+        paddingVertical: $spacingbase,
+        paddingHorizontal: $spacingextralarge,
+        marginVertical: $spacingsmall,
+        marginHorizontal: $spacingbase,
+    },
     removeButtonText: {
         borderRadius: $borderradiuslessrounded,
         borderWidth: $borderwidthbase,

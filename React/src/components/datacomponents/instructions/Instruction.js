@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { View, TextInput } from 'react-native'
+import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
 import TextElement from '../../sharedcomponents/TextElement'

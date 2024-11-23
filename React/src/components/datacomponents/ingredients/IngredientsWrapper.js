@@ -31,12 +31,12 @@ const IngredientsWrapper = ({
 
     const addIngredient = (ingredient) => {
         ingredToAdd = {
-            ingredient_id: ingredient[0],
-            ingredient_value: ingredient[1],
-            calories_per_hundred: ingredient[2],
+            id: ingredient[0],
+            name: ingredient[1],
+            caloric_value: ingredient[2],
         }
         ingredientsList.map(item => {
-            if (item.ingredient_id === ingredToAdd.ingredient_id) {
+            if (item.id === ingredToAdd.id) {
                 throw dupeException
             }
         })
@@ -45,48 +45,61 @@ const IngredientsWrapper = ({
 
     return (
         <>
-            <View style={GlobalStyles.subsectionHeader}>
-                <TextElement textValue='Ingredients' textStyle='xl' />
-            </View>
-            <IngredientsSection
-                isForm={isForm}
-                ingredientsList={ingredientsList}
-                handleRemoveIngredient={handleRemoveIngredient}
-            />
-            <Controller
-                name='create-recipe-ingredients-list'
-                control={control}
-                rules={{
-                    required: true
-                }}
-                render={({ field: { onChange, value=[]} }) => {
-                    return (
-                        <SelectDropdown
-                            data={ingredients}
-                            onSelect={(selectedItem, index) => {
-                                addIngredient(selectedItem)
-                                onChange([...value, selectedItem])
-                            }}
-                            renderButton={(selectedItem, isOpened) => {
-                                return (
-                                    <View style={ComponentStyles.pressableButtonBubbled}>
-                                        <TextElement textValue='Add Ingredient' />
-                                    </View>
-                                )
-                            }}
-                            renderItem={(item, index, isSelected) => {
-                                return (
-                                    <>
-                                        <TextElement textValue={item[1]} />
-                                    </>
-                                )
-                            }}
-                            showsVerticalScrollIndicator={false}
-                            search
-                        />
-                    )
-                }}
-            />
+            {
+                isForm ?
+                <>
+                    <View style={GlobalStyles.subsectionHeader}>
+                        <TextElement textValue='Ingredients' textStyle='xl' />
+                    </View>
+                    <IngredientsSection
+                        isForm={isForm}
+                        ingredientsList={ingredientsList}
+                        handleRemoveIngredient={handleRemoveIngredient}
+                    />
+                    <Controller
+                        name='create-recipe-ingredients-list'
+                        control={control}
+                        rules={{
+                            required: true
+                        }}
+                        render={({ field: { onChange, value=[]} }) => {
+                            return (
+                                <SelectDropdown
+                                    data={ingredients}
+                                    onSelect={(selectedItem, index) => {
+                                        addIngredient(selectedItem)
+                                        onChange([...value, selectedItem])
+                                    }}
+                                    renderButton={(selectedItem, isOpened) => {
+                                        return (
+                                            <View style={ComponentStyles.pressableButtonBubbled}>
+                                                <TextElement textValue='Add Ingredient' />
+                                            </View>
+                                        )
+                                    }}
+                                    renderItem={(item, index, isSelected) => {
+                                        return (
+                                            <>
+                                                <TextElement textValue={item[1]} />
+                                            </>
+                                        )
+                                    }}
+                                    showsVerticalScrollIndicator={false}
+                                    search
+                                />
+                            )
+                        }}
+                    />
+                </>
+                :
+                <>
+                    <IngredientsSection
+                        isForm={isForm}
+                        ingredientsList={ingredientsList}
+                        handleRemoveIngredient={handleRemoveIngredient}
+                    />
+                </>
+            }
         </>
     )
 }

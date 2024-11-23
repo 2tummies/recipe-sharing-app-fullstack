@@ -6,3 +6,14 @@ def get_all_additional_tools():
         cursor.execute("SELECT * FROM additional_tools;")
         rows = cursor.fetchall()
     return JsonResponse(rows, safe=False)
+
+def get_additional_tools_for_recipe(id):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT additional_tools.additional_tool_id, additional_tool_name, additional_tool_quantity FROM recipes " +
+            "JOIN recipe_additional_tools ON recipe_additional_tools.recipe_id = recipes.recipe_id " +
+            "JOIN additional_tools ON additional_tools.additional_tool_id = recipe_additional_tools.additional_tool_id " +
+            "WHERE recipes.recipe_id = %s;",
+            [id]
+        )
+        return cursor.fetchall()

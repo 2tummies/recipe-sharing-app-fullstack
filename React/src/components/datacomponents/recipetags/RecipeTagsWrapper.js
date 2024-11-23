@@ -39,44 +39,57 @@ const RecipeTagsWrapper = ({
 
     return (
         <>
-            <View style={GlobalStyles.subsectionHeader}>
-                <TextElement textValue='Recipe Tags' textStyle='xl' />
-            </View>
-            <RecipeTagsSection
-                isForm={isForm}
-                recipeTagsList={recipeTagsList}
-                handleRemoveRecipeTag={handleRemoveRecipeTag}
-            />
-            <Controller 
-                name='create-recipe-tags-list'
-                control={control}
-                render={({ field: { onChange, value=[] } }) => {
-                    return (
-                        <SelectDropdown
-                            data={recipeTags}
-                            onSelect={(selectedItem, index) => {
-                                addRecipeTag(selectedItem)
-                                onChange([...value, selectedItem])
-                            }}
-                            renderButton={(selectedItem, isOpened) => {
-                                return (
-                                    <View style={ComponentStyles.pressableButtonBubbled}>
-                                        <TextElement textValue='Add Recipe Tag' />
-                                    </View>
-                                )
-                            }}
-                            renderItem={(item, index, isSelected) => {
-                                return (
-                                    <>
-                                        <Text>{item[1]}</Text>
-                                    </>
-                                )
-                            }}
-                            showsVerticalScrollIndicator={false}
-                        />
-                    )
-                }}
-            />
+            {
+                isForm ?
+                <>
+                    <View style={GlobalStyles.subsectionHeader}>
+                        <TextElement textValue='Recipe Tags' textStyle='xl' />
+                    </View>
+                    <RecipeTagsSection
+                        isForm={isForm}
+                        recipeTagsList={recipeTagsList}
+                        handleRemoveRecipeTag={handleRemoveRecipeTag}
+                    />
+                    <Controller 
+                        name='create-recipe-tags-list'
+                        control={control}
+                        render={({ field: { onChange, value=[] } }) => {
+                            return (
+                                <SelectDropdown
+                                    data={recipeTags}
+                                    onSelect={(selectedItem, index) => {
+                                        addRecipeTag(selectedItem)
+                                        onChange([...value, selectedItem])
+                                    }}
+                                    renderButton={(selectedItem, isOpened) => {
+                                        return (
+                                            <View style={ComponentStyles.pressableButtonBubbled}>
+                                                <TextElement textValue='Add Recipe Tag' />
+                                            </View>
+                                        )
+                                    }}
+                                    renderItem={(item, index, isSelected) => {
+                                        return (
+                                            <>
+                                                <Text>{item[1]}</Text>
+                                            </>
+                                        )
+                                    }}
+                                    showsVerticalScrollIndicator={false}
+                                />
+                            )
+                        }}
+                    />
+                </>
+                :
+                <>
+                    <RecipeTagsSection
+                        isForm={isForm}
+                        recipeTagsList={recipeTagsList}
+                        handleRemoveRecipeTag={handleRemoveRecipeTag}
+                    />
+                </>
+            }
         </>
     )
 }

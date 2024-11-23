@@ -6,3 +6,14 @@ def get_all_recipe_tags():
         cursor.execute("SELECT * FROM recipe_tags;")
         rows = cursor.fetchall()
     return JsonResponse(rows, safe=False)
+
+def get_recipe_tags_for_recipe(recipeId):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT recipe_tags.recipe_tag_id, recipe_tag_name FROM recipes " +
+            "JOIN recipe_recipe_tags ON recipe_recipe_tags.recipe_id = recipes.recipe_id " +
+            "JOIN recipe_tags ON recipe_tags.recipe_tag_id = recipe_recipe_tags.recipe_tag_id " +
+           " WHERE recipes.recipe_id = %s;",
+           [recipeId]
+        )
+        return cursor.fetchall()

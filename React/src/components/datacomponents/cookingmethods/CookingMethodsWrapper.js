@@ -39,47 +39,60 @@ const CookingMethodsWrapper = ({
 
     return (
         <>
-            <View style={GlobalStyles.subsectionHeader}>
-                <TextElement textValue='Cooking Method(s)' textStyle='xl' />
-            </View>
-            <CookingMethodsSection
-                isForm={isForm}
-                cookingMethodsList={cookingMethodsList}
-                handleRemoveCookingMethod={handleRemoveCookingMethod}
-            />
-            <Controller
-                name='create-recipe-cooking-method-list'
-                control={control}
-                rules={{
-                    required: true
-                }}
-                render={({ field: { onChange, value=[] } }) => {
-                    return (
-                        <SelectDropdown
-                            data={cookingMethods}
-                            onSelect={(selectedItem, index) => {
-                                addCookingMethod(selectedItem)
-                                onChange([...value, selectedItem])
-                            }}
-                            renderButton={(selectedItem, isOpened) => {
-                                return (
-                                    <View style={ComponentStyles.pressableButtonBubbled}>
-                                        <TextElement textValue='Add Cooking Method' />
-                                    </View>
-                                )
-                            }}
-                            renderItem={(item, index, isSelected) => {
-                                return (
-                                    <>
-                                        <Text>{item[1]}</Text>
-                                    </>
-                                )
-                            }}
-                            showsVerticalScrollIndicator={false}
-                        />
-                    )
-                }}
-        />
+            {
+                isForm ?
+                <>
+                    <View style={GlobalStyles.subsectionHeader}>
+                        <TextElement textValue='Cooking Method(s)' textStyle='xl' />
+                    </View>
+                    <CookingMethodsSection
+                        isForm={isForm}
+                        cookingMethodsList={cookingMethodsList}
+                        handleRemoveCookingMethod={handleRemoveCookingMethod}
+                    />
+                    <Controller
+                        name='create-recipe-cooking-method-list'
+                        control={control}
+                        rules={{
+                            required: true
+                        }}
+                        render={({ field: { onChange, value=[] } }) => {
+                            return (
+                                <SelectDropdown
+                                    data={cookingMethods}
+                                    onSelect={(selectedItem, index) => {
+                                        addCookingMethod(selectedItem)
+                                        onChange([...value, selectedItem])
+                                    }}
+                                    renderButton={(selectedItem, isOpened) => {
+                                        return (
+                                            <View style={ComponentStyles.pressableButtonBubbled}>
+                                                <TextElement textValue='Add Cooking Method' />
+                                            </View>
+                                        )
+                                    }}
+                                    renderItem={(item, index, isSelected) => {
+                                        return (
+                                            <>
+                                                <Text>{item[1]}</Text>
+                                            </>
+                                        )
+                                    }}
+                                    showsVerticalScrollIndicator={false}
+                                />
+                            )
+                        }}
+                    />
+                </>
+                :
+                <>
+                    <CookingMethodsSection
+                        isForm={isForm}
+                        cookingMethodsList={cookingMethodsList}
+                        handleRemoveCookingMethod={handleRemoveCookingMethod}
+                    />
+                </>
+            }
         </>
     )
 }

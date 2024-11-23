@@ -26,6 +26,7 @@ const AdditionalToolsWrapper = ({
             const fetchedAdditionalTools = await getAllAdditionalTools()
             setAdditionalTools(fetchedAdditionalTools) 
         }
+        
         fetchAdditionalTools()
     }, [])
 
@@ -39,44 +40,57 @@ const AdditionalToolsWrapper = ({
 
     return (
         <>
-            <View style={GlobalStyles.subsectionHeader}>
-                <TextElement textValue='Additional Tools' textStyle='xl' />
-            </View>
-            <AdditionalToolSection
-                isForm={isForm}
-                additionalToolsList={additionalToolsList}
-                handleRemoveAdditionalTool={handleRemoveAdditionalTool}
-            />
-            <Controller
-                name='create-additional-tools-list'
-                control={control}
-                render={({ field: { onChange, value=[] } }) => {
-                    return (
-                        <SelectDropdown
-                            data={additionalTools}
-                            onSelect={(selectedItem, index) => {
-                                addAdditionalTool(selectedItem)
-                                onChange([...value, selectedItem])
-                            }}
-                            renderButton={(selectedItem, isOpened) => {
-                                return (
-                                    <View style={ComponentStyles.pressableButtonBubbled}>
-                                        <TextElement textValue='Add Additional Tools' />
-                                    </View>
-                                )
-                            }}
-                            renderItem={(item, index, isSelected) => {
-                                return (
-                                    <>
-                                        <Text>{item[1]}</Text>
-                                    </>
-                                )
-                            }}
-                            showsVerticalScrollIndicator={false}
-                        />
-                    )
-                }}
-            />
+            {
+                isForm ?
+                <>
+                    <View style={GlobalStyles.subsectionHeader}>
+                        <TextElement textValue='Additional Tools' textStyle='xl' />
+                    </View>
+                    <AdditionalToolSection
+                        isForm={isForm}
+                        additionalToolsList={additionalToolsList}
+                        handleRemoveAdditionalTool={handleRemoveAdditionalTool}
+                    />
+                    <Controller
+                        name='create-additional-tools-list'
+                        control={control}
+                        render={({ field: { onChange, value=[] } }) => {
+                            return (
+                                <SelectDropdown
+                                    data={additionalTools}
+                                    onSelect={(selectedItem, index) => {
+                                        addAdditionalTool(selectedItem)
+                                        onChange([...value, selectedItem])
+                                    }}
+                                    renderButton={(selectedItem, isOpened) => {
+                                        return (
+                                            <View style={ComponentStyles.pressableButtonBubbled}>
+                                                <TextElement textValue='Add Additional Tools' />
+                                            </View>
+                                        )
+                                    }}
+                                    renderItem={(item, index, isSelected) => {
+                                        return (
+                                            <>
+                                                <Text>{item[1]}</Text>
+                                            </>
+                                        )
+                                    }}
+                                    showsVerticalScrollIndicator={false}
+                                />
+                            )
+                        }}
+                    />
+                </>
+                :
+                <>
+                    <AdditionalToolSection
+                        isForm={isForm}
+                        additionalToolsList={additionalToolsList}
+                        handleRemoveAdditionalTool={handleRemoveAdditionalTool}
+                    />
+                </>
+            }
         </>
     )
 }

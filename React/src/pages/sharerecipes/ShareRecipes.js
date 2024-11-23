@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // Components
 import ShareRecipesLanding from './ShareRecipesLanding'
 import FilterRecipes from './FilterRecipes'
+import SharedRecipeDetailsPage from './RecipeDetailsPage'
 
 const ShareRecipes = () => {
 
@@ -28,6 +29,13 @@ const ShareRecipes = () => {
                 component={FilterRecipes}
                 options={{
                     title:'Look for a new recipe'
+                }}
+            />
+            <ShareRecipesStack.Screen
+                name='SharedRecipeDetailsPage'
+                component={SharedRecipeDetailsPage}
+                options={{
+                    title:'Recipe Detail Page'
                 }}
             />
         </ShareRecipesStack.Navigator>

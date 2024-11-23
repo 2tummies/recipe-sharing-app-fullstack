@@ -48,43 +48,51 @@ const InstructionsWrapper = ({
         updateRemainingInstructions(step)
     }
 
-    const instructionsArray = instructionsList.map(instruction => {
+    const instructionsArray = instructionsList.map((instruction, index) => {
+        const updatedInstruction = isForm ? instruction : { step: index + 1, text: instruction}
         return (
-            <View key={instruction.step} style={ComponentStyles.arrayItemWrapper}>
+            <>
                 {
                     isForm ?
-                    <>
+                    <View key={instruction.step} style={ComponentStyles.arrayItemWrapper}>
                         <Instruction instruction={instruction} isForm={isForm} instructionsList={instructionsList} setInstructionsList={setInstructionsList} />
                         <RemoveItemX removeFunction={() => handleRemoveInstruction(instruction)}/>
-                    </>
+                    </View>
                     :
-                    <Instruction instruction={instruction} isForm={isForm} instructionsList={instructionsList} setInstructionsList={setInstructionsList} />
+                    <View key={updatedInstruction.step}>
+                        <Instruction instruction={updatedInstruction} isForm={isForm}/>
+                    </View>
                 }
-            </View>
+            </>
         )
     })
 
     return (
         <>
-            <View style={GlobalStyles.subsectionHeader}>
-                <TextElement textValue='Instructions' textStyle='xl' />
-            </View>
             {
-                instructionsArray.length ?
+                isForm ?
+                <>
+                    <View style={GlobalStyles.subsectionHeader}>
+                        <TextElement textValue='Instructions' textStyle='xl' />
+                    </View>
+                    {
+                        instructionsArray.length ?
+                        <>
+                            {instructionsArray}
+                        </>
+                        :
+                        <View style={ComponentStyles.itemDefaultText}>
+                            <TextElement textValue='Instructions will go here' textStyle='sm' />
+                        </View>
+                    }
+                    <PressableButton buttonText='Add another step' onPressFunction={addInstruction} />
+                </>
+                :
                 <>
                     {instructionsArray}
                 </>
-                :
-                <View style={ComponentStyles.itemDefaultText}>
-                    <TextElement textValue='Instructions will go here' textStyle='sm' />
-                </View>
             }
-            {
-                isForm ?
-                <PressableButton buttonText='Add another step' onPressFunction={addInstruction} />
-                :
-                ''
-            }
+
         </>
     )
 }

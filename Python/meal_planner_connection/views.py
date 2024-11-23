@@ -48,8 +48,13 @@ class CookingMethodListCreate(generics.ListCreateAPIView):
     def get(self, request):
         return cooking_methods_sql.get_all_cooking_methods()
     
-class RecipesListCreate(generics.ListCreateAPIView):
+class SharedRecipesListCreate(generics.ListCreateAPIView):
     serializer_class = RecipesSerializer
 
     def get(self, request):
-        return recipes_sql.get_all_recipes()
+        return recipes_sql.get_shared_recipes_list()
+
+class GetSharedRecipeById(generics.ListCreateAPIView):
+    def get(self, request, *args, **kwargs):
+        recipe_id = kwargs['recipe_id']
+        return recipes_sql.get_shared_recipe_by_id(recipe_id)

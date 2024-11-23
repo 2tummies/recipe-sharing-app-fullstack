@@ -23,13 +23,15 @@ const Ingredient = ({
             const fetchedMeasurementUnits = await getAllMeasurementUnits()
             setMeasurementUnits(fetchedMeasurementUnits) 
         }
-        fetchMeasurementUnits()
+        if (isForm) {
+            fetchMeasurementUnits()
+        }
     }, [])
 
     const addMeasurementUnit = (e) => {
         ingredientsList.map((item) => {
-            if (ingredient.ingredient_id === item.ingredient_id) {
-                item['measurementUnit'] = e[1]
+            if (ingredient.id === item.id) {
+                item['measurement_unit_name'] = e[1]
             }
         })
     }
@@ -37,8 +39,8 @@ const Ingredient = ({
     const handleChange = (value) => {
         setValue(value)
         ingredientsList.map((item) => {
-            if (ingredient.ingredient_id === item.ingredient_id) {
-                item['measurementQuantity'] = value
+            if (ingredient.id === item.id) {
+                item['measurement_unit_quantity'] = value
             }
         })
     }
@@ -46,65 +48,76 @@ const Ingredient = ({
     return (
         <View style={ComponentStyles.ingredientItemWrapper}>
             <View style={ComponentStyles.ingredientItemName}>
-                <Text>{ingredient.ingredient_value}</Text>
+                <Text>{ingredient.name}</Text>
             </View>
             <View style={ComponentStyles.ingredientItemMeasurementUnitWrapper}>
-                <Controller
-                    name='create-recipe-ingredient-measurement-unit'
-                    control={control}
-                    rules={{
-                        required: true
-                    }}
-                    render={({ field: { onChange, value } }) => {
-                        return (
-                            <SelectDropdown
-                                data={measurementUnits}
-                                onSelect={(selectedItem, index) => {
-                                    addMeasurementUnit(selectedItem)
-                                    onChange(selectedItem)
-                                }}
-                                renderButton={(selectedItem, isOpened) => {
-                                    return (
-                                        <View style={ComponentStyles.ingredientItemMeasurementUnitButton}>
-                                            {
-                                                selectedItem ?
-                                                <TextElement textValue={selectedItem[1]} />
-                                                :
-                                                <TextElement textValue='Units' />
-                                            }
-                                        </View>
-                                    )
-                                }}
-                                renderItem={(item, index, isSelected) => {
-                                    return (
-                                        <>
-                                            <Text>{item[1]}</Text>
-                                        </>
-                                    )
-                                }}
-                                showsVerticalScrollIndicator={false}
-                            />
-                        )
-                    }}
-                />
-                <Controller
-                    name='create-recipe-ingredient-measurement-quantity'
-                    control={control}
-                    rules={{
-                        required : true
-                    }}
-                    render={({field: {value}}) => {
-                        return (
-                            <TextInput
-                                style={GlobalStyles.formInputTextField}
-                                placeholder='Qty'
-                                onChangeText={handleChange}
-                                value={value}
-                                required
-                            />
-                        )
-                    }}
-                />
+                {
+                    isForm ?
+                    <>
+                        <Controller
+                            name='create-recipe-ingredient-measurement-unit'
+                            control={control}
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field: { onChange, value } }) => {
+                                return (
+                                    <SelectDropdown
+                                        data={measurementUnits}
+                                        onSelect={(selectedItem, index) => {
+                                            addMeasurementUnit(selectedItem)
+                                            onChange(selectedItem)
+                                        }}
+                                        renderButton={(selectedItem, isOpened) => {
+                                            return (
+                                                <View style={ComponentStyles.ingredientItemMeasurementUnitButton}>
+                                                    {
+                                                        selectedItem ?
+                                                        <TextElement textValue={selectedItem[1]} />
+                                                        :
+                                                        <TextElement textValue='Units' />
+                                                    }
+                                                </View>
+                                            )
+                                        }}
+                                        renderItem={(item, index, isSelected) => {
+                                            return (
+                                                <>
+                                                    <Text>{item[1]}</Text>
+                                                </>
+                                            )
+                                        }}
+                                        showsVerticalScrollIndicator={false}
+                                    />
+                                )
+                            }}
+                        />
+                        <Controller
+                            name='create-recipe-ingredient-measurement-quantity'
+                            control={control}
+                            rules={{
+                                required : true
+                            }}
+                            render={({field: {value}}) => {
+                                return (
+                                    <TextInput
+                                        style={GlobalStyles.formInputTextField}
+                                        placeholder='Qty'
+                                        onChangeText={handleChange}
+                                        value={value}
+                                        required
+                                    />
+                                )
+                            }}
+                        />
+                    </>
+                    :
+                    <>
+                        <Text>{ingredient.caloric_value}</Text>
+                        <Text>{ingredient.measurement_unit_quantity}</Text>
+                        <Text>{ingredient.measurement_unit_name}</Text>
+                    </>
+                }
             </View>
         </View>
     )

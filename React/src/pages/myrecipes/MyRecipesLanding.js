@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 
-import PressableButton from '../../components/shared/PressableButton'
+import PressableButton from '../../components/sharedcomponents/PressableButton'
 
 import GlobalStyles from '../../styles/GlobalStyles'
 import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
