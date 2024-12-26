@@ -2,7 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import { useEffect, useState } from 'react'
 
 import { getAllSharedRecipes } from '../../../api/calls/RecipeApi'
-import RecipeListItem from '../recipes/RecipeListItem'
+import RecipeListItem from '../recipebasics/RecipeListItem'
 
 import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
