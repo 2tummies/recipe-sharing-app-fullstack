@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .serializers import *
@@ -58,3 +59,24 @@ class GetSharedRecipeById(generics.ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         recipe_id = kwargs['recipe_id']
         return recipes_sql.get_shared_recipe_by_id(recipe_id)
+    
+class AddNewRecipe(generics.ListCreateAPIView):
+    serializer_class = RecipesSerializer
+
+    def post(self, request):
+        try:
+            print(request.data)
+            recipes_sql.add_new_recipe(request.data)
+            return Response({"message":"Recipe created successfully"}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({"message":"Error creating recipe: " + e}, status=status.HTTP_400_BAD_REQUEST)
+
+    # recipe_name = request.data.get('recipeName'),
+    # recipe_description = request.data.get('recipeDescription'),
+    # recipe_cook_time = request.data.get('recipeCookTime'),
+    # recipe_prep_time = request.data.get('recipePrepTime'),
+    # recipe_instructions = request.data.get('instructions'),
+    # recipe_ingredients = request.data.get('ingredients'),
+    # recipe_additional_tools = request.data.get('additionalTools'),
+    # recipe_cooking_methods = request.data.get('cookingMethods'),
+    # recipe_tags = request.data.get('recipeTags'),

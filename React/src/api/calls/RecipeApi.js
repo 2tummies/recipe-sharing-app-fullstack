@@ -20,11 +20,14 @@ export const getSharedRecipeById = async (recipeId) => {
     }
 }
 
-export const addNewRecipe = () => {
-    try {
-        api.post('/meal_planner_connection/recipes')
-        .then()
-    } catch(error) {
-        alert(error)
-    }
+export const addNewRecipe = (recipe) => {
+    return (
+        api.post('/meal_planner_connection/recipes', recipe)
+        .then(response => {
+            console.log('successfully posted')
+        })
+        .catch(error => {
+            console.log('error in post')
+        })
+    )
 }

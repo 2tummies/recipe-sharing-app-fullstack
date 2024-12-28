@@ -17,3 +17,10 @@ def get_recipe_tags_for_recipe(recipeId):
            [recipeId]
         )
         return cursor.fetchall()
+
+def add_recipe_tags(cursor, recipe_id, tags):
+    for tag in tags:
+        cursor.execute(
+            "INSERT INTO recipe_recipe_tags(recipe_id, recipe_tag_id) VALUES (%s, %s)",
+            [recipe_id, tag[0]]
+        )

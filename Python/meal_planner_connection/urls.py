@@ -8,5 +8,6 @@ urlpatterns = [
     path('recipe_tags/', views.RecipeTagsListCreate.as_view(), name='recipe-tags'),
     path('cooking_methods/', views.CookingMethodListCreate.as_view(), name='cooking-methods'),
     path('recipes/', views.SharedRecipesListCreate.as_view(), name='shared-recipes-list'),
-    path('recipes/<int:recipe_id>', views.GetSharedRecipeById.as_view(), name='shared-recipe-by-id')
+    path('recipes/<int:recipe_id>', views.GetSharedRecipeById.as_view(), name='shared-recipe-by-id'),
+    path('recipes', views.AddNewRecipe.as_view(), name='create-recipe'),
 ]

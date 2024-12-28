@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS recipe_ingredient;
 DROP TABLE IF EXISTS recipe_cooking_method;
 DROP TABLE IF EXISTS recipe_additional_tools;
+DROP TABLE IF EXISTS recipe_recipe_tags;
 DROP TABLE IF EXISTS cooking_methods;
 DROP TABLE IF EXISTS measurement_units;
 DROP TABLE IF EXISTS additional_tools;
@@ -73,6 +74,13 @@ CREATE TABLE IF NOT EXISTS recipe_additional_tools(
         PRIMARY KEY (recipe_id, additional_tool_id)
 );
 
+CREATE TABLE IF NOT EXISTS recipe_recipe_tags(
+        recipe_id INT REFERENCES recipes,
+        recipe_tag_id INT REFERENCES recipe_tags,
+
+        PRIMARY KEY (recipe_id, recipe_tag_id)
+);
+
 INSERT INTO cooking_methods (cooking_method_id, cooking_method_name)
 VALUES
 (DEFAULT, 'Oven'),
@@ -115,7 +123,8 @@ VALUES
 (DEFAULT, 'Tbsp'),
 (DEFAULT, 'Tsp'),
 (DEFAULT, 'Clove(s)'),
-(DEFAULT, 'Misc')
+(DEFAULT, 'Misc'),
+(DEFAULT, 'Each'),
 ;
 
 INSERT INTO recipe_tags (recipe_tag_id, recipe_tag_name)

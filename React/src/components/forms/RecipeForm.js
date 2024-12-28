@@ -14,6 +14,7 @@ import CookingMethodsWrapper from '../datacomponents/cookingmethods/CookingMetho
 import AdditionalToolsWrapper from '../datacomponents/additionaltools/AdditionalToolsWrapper'
 import IngredientsWrapper from '../datacomponents/ingredients/IngredientsWrapper'
 import InstructionsWrapper from '../datacomponents/instructions/InstructionsWrapper'
+import { addNewRecipe } from '../../api/calls/RecipeApi'
 
 // Styles
 import GlobalStyles from '../../styles/GlobalStyles'
@@ -77,18 +78,19 @@ const AddRecipeForm = ({redirOnSubmit}) => {
     const onSubmitForm = async () => {
         isLoading(true)
         const finalData = {
-            recipeName: recipeName,
-            recipeDescription: recipeDescription,
-            recipePrepTime: recipePrepTime,
-            recipeCookTime: recipeCookTime,
-            cookingMethods: cookingMethodsList,
-            additionalTools: additionalToolsList,
-            recipeTags: recipeTagsList,
-            ingredients: ingredientsList,
-            instructions: instructionsList,
+            recipe_name: recipeName,
+            recipe_description: recipeDescription,
+            recipe_prep_time: recipePrepTime,
+            recipe_cook_time: recipeCookTime,
+            recipe_cooking_methods: cookingMethodsList,
+            recipe_additional_tools: additionalToolsList,
+            recipe_tags: recipeTagsList,
+            recipe_ingredients: ingredientsList,
+            recipe_instructions: instructionsList,
         }
         try {
-            console.log(finalData)
+            console.log('console right before post')
+            await addNewRecipe(finalData)
             redirOnSubmit()
         }
         catch (error) {

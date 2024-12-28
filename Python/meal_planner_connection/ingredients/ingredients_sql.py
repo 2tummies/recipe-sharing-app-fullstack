@@ -31,3 +31,11 @@ def get_ingredients_for_recipe(recipeId):
                 }
                 recipe_ingredients_data.append(ingredient_data)
         return recipe_ingredients_data
+
+def add_recipe_ingredients(cursor, recipe_id, ingredients):
+    for ingredient in ingredients:
+        cursor.execute(
+            "INSERT INTO recipe_ingredient (recipe_pk, ingredient_pk, measurement_unit, measurement_quantity) " +
+            "VALUES (%s, %s, %s, %s)",
+            [recipe_id, ingredient['id'], ingredient['measurement_unit_id'], ingredient['measurement_unit_qty']]
+        )

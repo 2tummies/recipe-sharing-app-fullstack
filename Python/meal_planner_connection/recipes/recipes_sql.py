@@ -46,15 +46,27 @@ def get_shared_recipe_by_id(id):
 
 def add_new_recipe(recipe):
     with connection.cursor() as cursor:
+        id = 0
         try:
+            recipe_instructions = []
+            for instruction in recipe['recipe_instructions']:
+                step_to_add = (instruction['step'], instruction['text'])
+                recipe_instructions.append(step_to_add)
             cursor.execute(
                 "INSERT INTO recipes (recipe_id, recipe_name, recipe_description, " +
                 "recipe_cook_time, recipe_prep_time, recipe_instructions) " +
-                "VALUES (DEFAULT, %s, %s, %s, %s, %s);",
-                [recipe.recipeName, recipe.recipeDescription, recipe.recipeCookTime, recipe.recipePrepTime, recipe.recipeInstructions]
+                "VALUES (DEFAULT, %s, %s, %s, %s, %s) RETURNING recipe_id;",
+                [recipe['recipe_name'], recipe['recipe_description'], recipe['recipe_cook_time'], recipe['recipe_prep_time'], recipe_instructions]
             )
-            connection.commit()
+            recipe_id = cursor.fetchone()[0]
+            ingredients_sql.add_recipe_ingredients(cursor, recipe_id, recipe['recipe_ingredients'])
+            additional_tools_sql.add_recipe_additional_tools(cursor, recipe_id, recipe['recipe_additional_tools'])
+            cooking_methods_sql.add_recipe_cooking_methods(cursor, recipe_id, recipe['recipe_cooking_methods'])
+            recipe_tags_sql.add_recipe_tags(cursor, recipe_id, recipe['recipe_tags'])
         except(Exception) as error:
+            connection.rollback()
             print(error)
+        else:
+            connection.commit()
         finally:
             print('success')

@@ -32,6 +32,7 @@ const Ingredient = ({
         ingredientsList.map((item) => {
             if (ingredient.id === item.id) {
                 item['measurement_unit_name'] = e[1]
+                item['measurement_unit_id'] = e[0]
             }
         })
     }
@@ -40,7 +41,7 @@ const Ingredient = ({
         setValue(value)
         ingredientsList.map((item) => {
             if (ingredient.id === item.id) {
-                item['measurement_unit_quantity'] = value
+                item['measurement_unit_qty'] = value
             }
         })
     }
@@ -114,7 +115,7 @@ const Ingredient = ({
                     :
                     <>
                         <Text>{ingredient.caloric_value}</Text>
-                        <Text>{ingredient.measurement_unit_quantity}</Text>
+                        <Text>{ingredient.measurement_unit_qty}</Text>
                         <Text>{ingredient.measurement_unit_name}</Text>
                     </>
                 }

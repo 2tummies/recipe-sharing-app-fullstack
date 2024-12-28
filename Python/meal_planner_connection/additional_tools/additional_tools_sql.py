@@ -17,3 +17,10 @@ def get_additional_tools_for_recipe(id):
             [id]
         )
         return cursor.fetchall()
+
+def add_recipe_additional_tools(cursor, recipe_id, additional_tools):
+    for additional_tool in additional_tools:
+        cursor.execute(
+            "INSERT INTO recipe_additional_tools (recipe_id, additional_tool_id, additional_tool_quantity) VALUES (%s, %s, 1)",
+            [recipe_id, additional_tool[0]]
+        )
