@@ -55,6 +55,24 @@ const Ingredient = ({
                 {
                     isForm ?
                     <>
+                    <Controller
+                        name='create-recipe-ingredient-measurement-quantity'
+                        control={control}
+                        rules={{
+                            required : true
+                        }}
+                        render={({field: {value}}) => {
+                            return (
+                                <TextInput
+                                    style={GlobalStyles.formInputTextField}
+                                    placeholder='Qty'
+                                    onChangeText={handleChange}
+                                    value={value}
+                                    required
+                                />
+                            )
+                        }}
+                    />
                         <Controller
                             name='create-recipe-ingredient-measurement-unit'
                             control={control}
@@ -89,24 +107,6 @@ const Ingredient = ({
                                             )
                                         }}
                                         showsVerticalScrollIndicator={false}
-                                    />
-                                )
-                            }}
-                        />
-                        <Controller
-                            name='create-recipe-ingredient-measurement-quantity'
-                            control={control}
-                            rules={{
-                                required : true
-                            }}
-                            render={({field: {value}}) => {
-                                return (
-                                    <TextInput
-                                        style={GlobalStyles.formInputTextField}
-                                        placeholder='Qty'
-                                        onChangeText={handleChange}
-                                        value={value}
-                                        required
                                     />
                                 )
                             }}

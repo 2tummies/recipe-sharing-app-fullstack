@@ -32,7 +32,7 @@ const ComponentStyles = StyleSheet.create({
     ingredientItemMeasurementUnitButton: {
         borderRadius: $borderradiusbase,
         borderWidth: $borderwidthbase,
-        marginRight: $spacingsmall,
+        marginLeft: $spacingsmall,
         justifyContent: 'center',
         padding: $spacingbase,
     },
@@ -138,6 +138,18 @@ const ComponentStyles = StyleSheet.create({
         paddingHorizontal: $spacingextralarge,
         marginVertical: $spacingsmall,
         marginHorizontal: $spacingbase,
+    },
+    recipeTimeWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    recipeTimeItem: {
+        width: '75%'
+    },
+    recipeTimeLabel: {
+        width: '20%',
+        alignSelf: 'center',
     },
     removeButtonText: {
         borderRadius: $borderradiuslessrounded,

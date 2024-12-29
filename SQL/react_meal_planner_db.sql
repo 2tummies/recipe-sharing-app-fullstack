@@ -124,7 +124,7 @@ VALUES
 (DEFAULT, 'Tsp'),
 (DEFAULT, 'Clove(s)'),
 (DEFAULT, 'Misc'),
-(DEFAULT, 'Each'),
+(DEFAULT, 'Each')
 ;
 
 INSERT INTO recipe_tags (recipe_tag_id, recipe_tag_name)
