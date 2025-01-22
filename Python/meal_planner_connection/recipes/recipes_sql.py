@@ -46,7 +46,6 @@ def get_shared_recipe_by_id(id):
 
 def add_new_recipe(recipe):
     with connection.cursor() as cursor:
-        id = 0
         try:
             recipe_instructions = []
             for instruction in recipe['recipe_instructions']:

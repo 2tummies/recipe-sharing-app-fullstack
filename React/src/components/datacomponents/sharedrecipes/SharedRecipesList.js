@@ -2,13 +2,13 @@ import { View, Text, Pressable } from 'react-native'
 import { useEffect, useState } from 'react'
 
 import { getAllSharedRecipes } from '../../../api/calls/RecipeApi'
-import RecipeListItem from '../recipebasics/RecipeListItem'
+import RecipeListItem from './RecipeListItem'
 
 import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
 const SharedRecipesList = ({navigation}) => {
-    const [sharedRecipes, setSharedRecipes] = useState([])
-    const [isShared, setIsShared] = useState()
+    const [ sharedRecipes, setSharedRecipes ] = useState([])
+    const [ isShared, setIsShared ] = useState()
 
     useEffect(() => {
         const fetchSharedRecipes = async () => {
@@ -25,7 +25,7 @@ const SharedRecipesList = ({navigation}) => {
     }
 
     const onPressFunction = (recipeId) => {
-        navigation.navigate('SharedRecipeDetailsPage', {data: recipeId})
+        navigation.navigate('RecipeDetailsPage', {data: recipeId})
     }
 
     const sharedRecipesArray = sharedRecipes.map(recipe => {

@@ -2,7 +2,7 @@ import api from '../api'
 
 export const getAllSharedRecipes = async () => {
     try {
-        const res = await api.get('/meal_planner_connection/recipes')
+        const res = await api.get('/meal_planner_connection/recipes/')
         return res.data
     } catch(error) {
         console.log(error)
@@ -16,7 +16,7 @@ export const getSharedRecipeById = async (recipeId) => {
         return res.data
     } catch(error) {
         console.log(error)
-        return ''
+        return []
     }
 }
 

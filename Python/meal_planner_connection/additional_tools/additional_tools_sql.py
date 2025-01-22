@@ -20,7 +20,10 @@ def get_additional_tools_for_recipe(id):
 
 def add_recipe_additional_tools(cursor, recipe_id, additional_tools):
     for additional_tool in additional_tools:
-        cursor.execute(
-            "INSERT INTO recipe_additional_tools (recipe_id, additional_tool_id, additional_tool_quantity) VALUES (%s, %s, 1)",
-            [recipe_id, additional_tool[0]]
-        )
+        try:
+            cursor.execute(
+                "INSERT INTO recipe_additional_tools (recipe_id, additional_tool_id, additional_tool_quantity) VALUES (%s, %s, 1)",
+                [recipe_id, additional_tool[0]]
+            )
+        except Exception as error:
+            print(f"Error inserting tag {additional_tool[0]}: {error}")

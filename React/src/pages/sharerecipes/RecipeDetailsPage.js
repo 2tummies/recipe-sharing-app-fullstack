@@ -12,7 +12,7 @@ import CookingMethodsWrapper from '../../components/datacomponents/cookingmethod
 import AdditionalToolsWrapper from '../../components/datacomponents/additionaltools/AdditionalToolsWrapper'
 import IngredientsWrapper from '../../components/datacomponents/ingredients/IngredientsWrapper'
 
-const SharedRecipeDetailsPage = ({
+const RecipeDetailsPage = ({
     route
 }) => {
     const { data: recipeId } = route.params
@@ -52,4 +52,4 @@ const SharedRecipeDetailsPage = ({
     )
 }
 
-export default SharedRecipeDetailsPage
+export default RecipeDetailsPage
