@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, TextInput } from 'react-native'
+import { View, TextInput, Text } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 
 import TextElement from '../../sharedcomponents/TextElement'
@@ -47,8 +47,8 @@ const RecipeName = ({
                     />
                 </View>
                 :
-                <View>
-                    <TextElement textValue={recipeName} />
+                <View style={GlobalStyles.subsectionHeader}>
+                    <TextElement textValue={recipeName} headingStyle='2'/>
                 </View>
             }
         </>

@@ -1,11 +1,9 @@
 import { ScrollView, View, StyleSheet } from 'react-native'
 
-// Components
 import RecipeForm from '../../components/forms/RecipeForm'
 import PressableButton from '../../components/sharedcomponents/PressableButton'
 import TextElement from '../../components/sharedcomponents/TextElement'
 
-// Styles
 import GlobalStyles from '../../styles/GlobalStyles'
 
 const MyRecipesCreateRecipe = ({ navigation }) => {

@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native'
+import { Pressable } from 'react-native'
 import { useEffect, useState } from 'react'
 
 import { getAllSharedRecipes } from '../../../api/calls/RecipeApi'

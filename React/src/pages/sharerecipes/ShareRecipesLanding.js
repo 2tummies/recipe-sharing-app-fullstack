@@ -1,17 +1,16 @@
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, ScrollView } from 'react-native'
 
 import SharedRecipesList from '../../components/datacomponents/sharedrecipes/SharedRecipesList'
 
 const ShareRecipesLanding = ({navigation}) => {
-
     return (
-        <View>
+        <ScrollView>
             <Button
                 title='Share a Recipe'
             />
             <Text>Look for a Recipe</Text>
             <SharedRecipesList navigation={navigation} />
-        </View>
+        </ScrollView>
     )
 }
 

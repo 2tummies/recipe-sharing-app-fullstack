@@ -48,31 +48,31 @@ const Ingredient = ({
 
     return (
         <View style={ComponentStyles.ingredientItemWrapper}>
-            <View style={ComponentStyles.ingredientItemName}>
-                <Text>{ingredient.name}</Text>
-            </View>
-            <View style={ComponentStyles.ingredientItemMeasurementUnitWrapper}>
-                {
-                    isForm ?
-                    <>
-                    <Controller
-                        name='create-recipe-ingredient-measurement-quantity'
-                        control={control}
-                        rules={{
-                            required : true
-                        }}
-                        render={({field: {value}}) => {
-                            return (
-                                <TextInput
-                                    style={GlobalStyles.formInputTextField}
-                                    placeholder='Qty'
-                                    onChangeText={handleChange}
-                                    value={value}
-                                    required
-                                />
-                            )
-                        }}
-                    />
+            {
+                isForm ?
+                <>
+                    <View style={ComponentStyles.ingredientItemName}>
+                        <Text>{ingredient.name}</Text>
+                    </View>
+                    <View style={ComponentStyles.ingredientItemMeasurementUnitWrapper}>
+                        <Controller
+                            name='create-recipe-ingredient-measurement-quantity'
+                            control={control}
+                            rules={{
+                                required : true
+                            }}
+                            render={({field: {value}}) => {
+                                return (
+                                    <TextInput
+                                        style={GlobalStyles.formInputTextField}
+                                        placeholder='Qty'
+                                        onChangeText={handleChange}
+                                        value={value}
+                                        required
+                                    />
+                                )
+                            }}
+                        />
                         <Controller
                             name='create-recipe-ingredient-measurement-unit'
                             control={control}
@@ -111,15 +111,24 @@ const Ingredient = ({
                                 )
                             }}
                         />
-                    </>
-                    :
-                    <>
-                        <Text>{ingredient.caloric_value}</Text>
-                        <Text>{ingredient.measurement_unit_qty}</Text>
-                        <Text>{ingredient.measurement_unit_name}</Text>
-                    </>
-                }
-            </View>
+                    </View>
+                </>
+                :
+                <>
+                    <View style={ComponentStyles.ingredientItemMeasurementUnitWrapper}>
+                        <View>
+                            <TextElement textValue={ingredient.measurement_unit_quantity} />
+                        </View>
+                        <View>
+                            <TextElement textValue={ingredient.measurement_unit_name} />
+                        </View>
+                    </View>
+                    <View>
+                        <Text>{ingredient.name}</Text>
+                    </View>
+                    {/* <Text>{ingredient.caloric_value}</Text> */}
+                </>
+            }
         </View>
     )
 }
