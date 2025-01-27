@@ -20,9 +20,26 @@ def get_recipe_basics(id):
             [id]
         )
         return cursor.fetchone()
+    
+def get_recipe_instructions(id):
+    recipe_ingredients = []
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT recipe_instructions FROM recipes " + 
+            "WHERE recipes.recipe_id = %s;",
+            [id]
+        )
+        data = cursor.fetchone()
+        for data_piece in data:
+            for ingredient_step in data_piece:
+                num_str = int(ingredient_step[1])
+                text = ingredient_step[4:-2]
+                recipe_ingredients.append((num_str, text))
+        return recipe_ingredients
 
 def get_shared_recipe_by_id(id):
     recipe_basics = get_recipe_basics(id)
+    recipe_instructions = get_recipe_instructions(id)
     recipe_tags_data = recipe_tags_sql.get_recipe_tags_for_recipe(id)
     recipe_ingredients_data = ingredients_sql.get_ingredients_for_recipe(id)
     recipe_cooking_methods_data = cooking_methods_sql.get_cooking_methods_for_recipe(id)
@@ -33,7 +50,7 @@ def get_shared_recipe_by_id(id):
             'recipe_description': recipe_basics[1],
             'recipe_cook_time': recipe_basics[2],
             'recipe_prep_time': recipe_basics[3],
-            'recipe_instructions': recipe_basics[4],
+            'recipe_instructions': recipe_instructions,
             'recipe_tags': recipe_tags_data,
             'recipe_cooking_methods': recipe_cooking_methods_data,
             'recipe_additional_tools': recipe_additional_tools_data,

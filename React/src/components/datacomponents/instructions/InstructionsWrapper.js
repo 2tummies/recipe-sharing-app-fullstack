@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 import TextElement from '../../sharedcomponents/TextElement'
 import PressableButton from '../../sharedcomponents/PressableButton'
@@ -50,21 +50,20 @@ const InstructionsWrapper = ({
 
     const instructionsArray = instructionsList.map((instruction, index) => {
         const updatedInstruction = isForm ? instruction : { step: index + 1, text: instruction}
-        return (
-            <>
-                {
-                    isForm ?
-                    <View key={instruction.step} style={ComponentStyles.arrayItemWrapper}>
-                        <Instruction instruction={instruction} isForm={isForm} instructionsList={instructionsList} setInstructionsList={setInstructionsList} />
-                        <RemoveItemX removeFunction={() => handleRemoveInstruction(instruction)}/>
-                    </View>
-                    :
-                    <View key={updatedInstruction.step}>
-                        <Instruction instruction={updatedInstruction} isForm={isForm}/>
-                    </View>
-                }
-            </>
-        )
+        if (isForm) {
+            return (
+                <View key={instruction.step} style={ComponentStyles.arrayItemWrapper}>
+                    <Instruction instruction={instruction} isForm={isForm} instructionsList={instructionsList} setInstructionsList={setInstructionsList} />
+                    <RemoveItemX removeFunction={() => handleRemoveInstruction(instruction)}/>
+                </View>
+            )
+        } else {
+            return (
+                <View key={updatedInstruction.step}>
+                    <Instruction instruction={updatedInstruction} isForm={isForm}/>
+                </View>
+            )
+        }
     })
 
     return (
