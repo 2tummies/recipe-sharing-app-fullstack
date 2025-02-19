@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS recipes(
 CREATE TABLE IF NOT EXISTS recipe_ingredient(
         recipe_pk INT REFERENCES recipes,
         ingredient_pk INT REFERENCES ingredients,
-        measurement_unit INT REFERENCES measurement_units,
-        measurement_quantity INT NOT NULL,
+        measurement_unit SMALLINT REFERENCES measurement_units,
+        measurement_quantity DECIMAL NOT NULL,
 
         PRIMARY KEY (recipe_pk, ingredient_pk, measurement_unit) 
 );
@@ -110,7 +110,9 @@ VALUES
 (DEFAULT, 'Aluminum Foil'),
 (DEFAULT, 'Sieve'),
 (DEFAULT, 'Colander'),
-(DEFAULT, 'Rubber Spatula')
+(DEFAULT, 'Rubber Spatula'),
+(DEFAULT, 'Butter Knife'),
+(DEFAULT, 'Knife')
 ;
 
 INSERT INTO measurement_units (measurement_unit_id, measurement_unit_name)

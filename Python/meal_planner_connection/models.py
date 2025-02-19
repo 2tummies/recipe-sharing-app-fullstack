@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Ingredient(models.Model):
 
     ingredient_id = models.AutoField(primary_key=True)
-    ingredient_name = models.CharField(unique=True, max_length=75)
+    ingredient_name = models.CharField(unique=True, max_length=200)
     ingredient_caloric_value = models.IntegerField()
 
     class Meta:
@@ -81,38 +81,36 @@ class Recipes(models.Model):
     def __str__(self):
         return self.recipe_name
 
-# class RecipeAdditionalTools(models.Model):
+class RecipeAdditionalTools(models.Model):
 
-#     recipe = models.OneToOneField('Recipes', models.DO_NOTHING, primary_key=True)  # The composite primary key (recipe_id, additional_tool_id) found, that is not supported. The first column is selected.
-#     additional_tool = models.ForeignKey(AdditionalTools, models.DO_NOTHING)
-#     additional_tool_quantity = models.IntegerField(blank=True, null=True)
+    recipe = models.OneToOneField('Recipes', models.DO_NOTHING, primary_key=True)
+    additional_tool = models.ForeignKey(AdditionalTools, models.DO_NOTHING)
+    additional_tool_quantity = models.IntegerField(blank=True, null=True)
 
-#     class Meta:
-#         managed = False
-#         db_table = 'recipe_additional_tools'
-#         unique_together = (('recipe', 'additional_tool'),)
+    class Meta:
+        managed = False
+        db_table = 'recipe_additional_tools'
+        unique_together = (('recipe', 'additional_tool'),)
 
-# class RecipeCookingMethod(models.Model):
+class RecipeCookingMethod(models.Model):
 
-#     recipe = models.OneToOneField('Recipes', models.DO_NOTHING, primary_key=True)  # The composite primary key (recipe_id, cooking_method_id) found, that is not supported. The first column is selected.
-#     cooking_method = models.ForeignKey(CookingMethods, models.DO_NOTHING)
-#     cooking_method_quantity = models.IntegerField(blank=True, null=True)
+    recipe = models.OneToOneField('Recipes', models.DO_NOTHING, primary_key=True)
+    cooking_method = models.ForeignKey(CookingMethods, models.DO_NOTHING)
+    cooking_method_quantity = models.IntegerField(blank=True, null=True)
 
-#     class Meta:
-#         managed = False
-#         db_table = 'recipe_cooking_method'
-#         unique_together = (('recipe', 'cooking_method'),)
+    class Meta:
+        managed = False
+        db_table = 'recipe_cooking_method'
+        unique_together = (('recipe', 'cooking_method'),)
 
+class RecipeIngredient(models.Model):
 
+    recipe_pk = models.OneToOneField('Recipes', models.DO_NOTHING, db_column='recipe_pk', primary_key=True)
+    ingredient_pk = models.ForeignKey(Ingredient, models.DO_NOTHING, db_column='ingredient_pk')
+    measurement_unit = models.ForeignKey(MeasurementUnits, models.DO_NOTHING, db_column='measurement_unit', blank=True, null=True)
+    measurement_quantity = models.IntegerField()
 
-# class RecipeIngredient(models.Model):
-
-#     recipe_pk = models.OneToOneField('Recipes', models.DO_NOTHING, db_column='recipe_pk', primary_key=True)  # The composite primary key (recipe_pk, ingredient_pk) found, that is not supported. The first column is selected.
-#     ingredient_pk = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='ingredient_pk')
-#     measurement_unit = models.ForeignKey(MeasurementUnits, models.DO_NOTHING, db_column='measurement_unit', blank=True, null=True)
-#     measurement_quantity = models.IntegerField()
-
-#     class Meta:
-#         managed = False
-#         db_table = 'recipe_ingredient'
-#         unique_together = (('recipe_pk', 'ingredient_pk'),)
+    class Meta:
+        managed = False
+        db_table = 'recipe_ingredient'
+        unique_together = (('recipe_pk', 'ingredient_pk', 'measurement_unit'),)
