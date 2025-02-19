@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS additional_tools;
 DROP TABLE IF EXISTS ingredients;
 DROP TABLE IF EXISTS recipes;
 DROP TABLE IF EXISTS recipe_tags;
+DROP TABLE IF EXISTS ingredient_components;
 
 CREATE TABLE IF NOT EXISTS cooking_methods(
         cooking_method_id SERIAL PRIMARY KEY,
@@ -42,11 +43,11 @@ CREATE TABLE IF NOT EXISTS recipe_tags(
 
 CREATE TABLE IF NOT EXISTS recipes(
         recipe_id SERIAL PRIMARY KEY,
-        recipe_name VARCHAR (75) NOT NULL,
-        recipe_description VARCHAR (350),
-        recipe_cook_time INT,
-        recipe_prep_time INT,
-        recipe_instructions VARCHAR[]
+        recipe_name VARCHAR (100) NOT NULL,
+        recipe_description VARCHAR (500),
+        recipe_cook_time SMALLINT,
+        recipe_prep_time SMALLINT,
+        recipe_instructions VARCHAR[] NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS recipe_ingredient(
@@ -55,13 +56,13 @@ CREATE TABLE IF NOT EXISTS recipe_ingredient(
         measurement_unit INT REFERENCES measurement_units,
         measurement_quantity INT NOT NULL,
 
-        PRIMARY KEY (recipe_pk, ingredient_pk) 
+        PRIMARY KEY (recipe_pk, ingredient_pk, measurement_unit) 
 );
 
 CREATE TABLE IF NOT EXISTS recipe_cooking_method(
         recipe_id INT REFERENCES recipes,
         cooking_method_id INT REFERENCES cooking_methods,
-        cooking_method_quantity INT,
+        cooking_method_quantity SMALLINT,
 
         PRIMARY KEY (recipe_id, cooking_method_id)
 );
@@ -69,7 +70,7 @@ CREATE TABLE IF NOT EXISTS recipe_cooking_method(
 CREATE TABLE IF NOT EXISTS recipe_additional_tools(
         recipe_id INT REFERENCES recipes,
         additional_tool_id INT REFERENCES additional_tools,
-        additional_tool_quantity INT,
+        additional_tool_quantity SMALLINT,
 
         PRIMARY KEY (recipe_id, additional_tool_id)
 );
