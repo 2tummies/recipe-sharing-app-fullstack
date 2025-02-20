@@ -1,3 +1,15 @@
+INSERT INTO measurement_units
+VALUES
+(DEFAULT, 'Each'),
+(DEFAULT, 'Whole')
+;
+
+INSERT INTO measurement_units
+VALUES
+(DEFAULT, 'Butter Knife'),
+(DEFAULT, 'Knife')
+;
+
 SELECT * FROM ingredients;
 SELECT ingredient_name, ingredient_caloric_value FROM ingredients;
 
@@ -12,6 +24,8 @@ SELECT * FROM cooking_methods;
 SELECT * FROM recipe_tags;
 
 SELECT * FROM recipes;
+
+SELECT recipe_instructions FROM recipes;
 
 SELECT * FROM recipe_ingredient;
 

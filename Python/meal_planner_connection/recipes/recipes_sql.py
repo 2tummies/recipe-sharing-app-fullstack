@@ -30,11 +30,8 @@ def get_recipe_instructions(id):
             [id]
         )
         data = cursor.fetchone()
-        for data_piece in data:
-            for ingredient_step in data_piece:
-                num_str = int(ingredient_step[1])
-                text = ingredient_step[4:-2]
-                recipe_ingredients.append((num_str, text))
+        for data_piece in data[0]:
+            recipe_ingredients.append(data_piece)
         return recipe_ingredients
 
 def get_shared_recipe_by_id(id):
@@ -66,8 +63,7 @@ def add_new_recipe(recipe):
         try:
             recipe_instructions = []
             for instruction in recipe['recipe_instructions']:
-                step_to_add = (instruction['step'], instruction['text'])
-                recipe_instructions.append(step_to_add)
+                recipe_instructions.append(instruction['text'])
             cursor.execute(
                 "INSERT INTO recipes (recipe_id, recipe_name, recipe_description, " +
                 "recipe_cook_time, recipe_prep_time, recipe_instructions) " +
