@@ -5,6 +5,8 @@ import { useForm, Controller } from 'react-hook-form'
 import TextElement from '../../sharedcomponents/TextElement'
 
 import GlobalStyles from '../../../styles/GlobalStyles'
+import TextStyles from '../../../styles/additionalstyles/TextStyles'
+import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
 const RecipeDescription = ({
     isForm,
@@ -47,9 +49,9 @@ const RecipeDescription = ({
                     />
                 </>
                 :
-                <>
+                <View style={[ComponentStyles.descriptionWrapper ,TextStyles.textOverflowWrap]}>
                     <TextElement textValue={recipeDescription} />
-                </>
+                </View>
             }
         </>
     )

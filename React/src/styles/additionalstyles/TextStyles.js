@@ -49,6 +49,9 @@ const TextStyles = StyleSheet.create({
     textAlignRight: {
         textAlign: 'right',
     },
+    textOverflowWrap: {
+        flexWrap: 'wrap',
+    },
 })
 
 export default TextStyles

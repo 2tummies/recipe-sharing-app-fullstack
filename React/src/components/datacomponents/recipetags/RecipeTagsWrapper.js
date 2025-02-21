@@ -82,13 +82,13 @@ const RecipeTagsWrapper = ({
                     />
                 </>
                 :
-                <>
+                <View style={ComponentStyles.tagAndToolWrapper}>
                     <RecipeTagsSection
                         isForm={isForm}
                         recipeTagsList={recipeTagsList}
                         handleRemoveRecipeTag={handleRemoveRecipeTag}
                     />
-                </>
+                </View>
             }
         </>
     )

@@ -23,6 +23,11 @@ const GlobalStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         },
+    pageHeader: {
+        width: '100%',
+        alignItems: 'center',
+        fontWeight: 'bold',
+    },
     subsectionHeader: {
         marginVertical: $spacingsmall,
     },

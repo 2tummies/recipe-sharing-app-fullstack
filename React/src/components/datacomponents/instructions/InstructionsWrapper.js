@@ -48,22 +48,25 @@ const InstructionsWrapper = ({
         updateRemainingInstructions(step)
     }
 
-    const instructionsArray = instructionsList.map((instruction, index) => {
-        const updatedInstruction = isForm ? instruction : { step: index + 1, text: instruction}
+    const editInstructionsArray = instructionsList.map((instruction, index) => {
         if (isForm) {
+            // const updatedInstruction = isForm ? instruction : { step: index + 1, text: instruction}
             return (
                 <View key={instruction.step} style={ComponentStyles.arrayItemWrapper}>
                     <Instruction instruction={instruction} isForm={isForm} instructionsList={instructionsList} setInstructionsList={setInstructionsList} />
                     <RemoveItemX removeFunction={() => handleRemoveInstruction(instruction)}/>
                 </View>
             )
-        } else {
-            return (
-                <View key={updatedInstruction.step}>
-                    <Instruction instruction={updatedInstruction} isForm={isForm}/>
-                </View>
-            )
         }
+    })
+
+    const displayInstructionsArray = instructionsList.map((instruction, index) => {
+        const step = index + 1
+        return (
+            <View key={index} style={ComponentStyles.arrayItemWrapper}>
+                <Instruction instruction={instruction} step={step} isForm={isForm}/>
+            </View>
+        )
     })
 
     return (
@@ -75,9 +78,9 @@ const InstructionsWrapper = ({
                         <TextElement textValue='Instructions' textStyle='xl' />
                     </View>
                     {
-                        instructionsArray.length ?
+                        editInstructionsArray.length ?
                         <>
-                            {instructionsArray}
+                            {editInstructionsArray}
                         </>
                         :
                         <View style={ComponentStyles.itemDefaultText}>
@@ -88,7 +91,7 @@ const InstructionsWrapper = ({
                 </>
                 :
                 <>
-                    {instructionsArray}
+                    {displayInstructionsArray}
                 </>
             }
 

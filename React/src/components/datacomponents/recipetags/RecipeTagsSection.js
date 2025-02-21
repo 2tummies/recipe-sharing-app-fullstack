@@ -20,7 +20,9 @@ const RecipeTagsSection = ({
                         <Text style={ComponentStyles.itemBubbleCloseText}>X</Text>
                     </Pressable>
                     :
-                    <RecipeTag tagName={tag[1]} />
+                    <View style={ComponentStyles.itemBubble}>
+                        <RecipeTag tagName={tag[1]} />
+                    </View>
                 }
             </View>
         )

@@ -22,42 +22,41 @@ const RecipeCookTime = ({
 
     return (
         <>
+            <View style={GlobalStyles.subsectionHeader}>
+                <TextElement textValue='Cook Time' textStyle='xl' textAlign='center' />
+            </View>
             {
                 isForm ?
-                <>
-                    <View style={GlobalStyles.subsectionHeader}>
-                        <TextElement textValue='Cook Time' textStyle='xl' textAlign='center' />
+                <View style={ComponentStyles.recipeTimeWrapper}>
+                    <Controller
+                        name='create-recipe-cook-time'
+                        control={control}
+                        rules={{
+                            required : true
+                        }}
+                        render={({field: {value}}) => {
+                            return (
+                                <TextInput
+                                    style={[GlobalStyles.formInputTextField, ComponentStyles.recipeTimeItem]}
+                                    placeholder='Time'
+                                    onChangeText={handleChange}
+                                    value={value}
+                                    required
+                                />
+                            )
+                        }}
+                    />
+                    <View style={ComponentStyles.recipeTimeLabel}>
+                        <TextElement textValue={'mins'} textAlign={'center'} />
                     </View>
-                    <View style={ComponentStyles.recipeTimeWrapper}>
-                        <Controller
-                            name='create-recipe-cook-time'
-                            control={control}
-                            rules={{
-                                required : true
-                            }}
-                            render={({field: {value}}) => {
-                                return (
-                                    <TextInput
-                                        style={[GlobalStyles.formInputTextField, ComponentStyles.recipeTimeItem]}
-                                        placeholder='Time'
-                                        onChangeText={handleChange}
-                                        value={value}
-                                        required
-                                    />
-                                )
-                            }}
-                        />
-                        <View style={ComponentStyles.recipeTimeLabel}>
-                            <TextElement textValue={'mins'} textAlign={'center'} />
-                        </View>
-                    </View>
-                </>
+                </View>
                 :
-                <>
-                    {/* <TextElement textValue={recipeCookTime} /> */}
-                    {/* #TODO: Figure out why this causes an error and put back in */}
-                    <Text>Cook Time placeholder</Text>
-                </>
+                <View style={ComponentStyles.recipeTimeWrapper}>
+                    <TextElement textValue={recipeCookTime} />
+                    <View style={ComponentStyles.recipeTimeLabel}>
+                        <TextElement textValue={'mins'} textAlign={'center'} />
+                    </View>
+                </View>
             }
         </>
     )

@@ -1,4 +1,4 @@
-import { View, TextInput } from 'react-native'
+import { View, TextInput, Text } from 'react-native'
 import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
@@ -10,7 +10,8 @@ import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 const Instruction = ({
     isForm,
     instruction,
-    setInstructionsList
+    setInstructionsList,
+    step
 }) => {
     const { control } = useForm()
     const [ value, setValue ] = useState('')
@@ -55,12 +56,12 @@ const Instruction = ({
                     />
                 </View>
                 :
-                <View style={ComponentStyles.instructionItem}>
-                    <View>
-                        <TextElement textValue={instruction.step} />
+                <View style={ComponentStyles.instructionItemWrapper}>
+                    <View style={ComponentStyles.instructionItemStep}>
+                        <TextElement textValue={step + '.'} />
                     </View>
-                    <View>
-                        <TextElement textValue={instruction.text} />
+                    <View style={ComponentStyles.instructionItemText}>
+                        <TextElement textValue={instruction} />
                     </View>
                 </View>
             }

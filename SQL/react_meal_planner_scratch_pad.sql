@@ -24,6 +24,8 @@ SELECT * FROM cooking_methods;
 SELECT * FROM recipe_tags;
 
 SELECT * FROM recipes;
+UPDATE recipes
+SET recipe_prep_time = 0;
 
 SELECT recipe_instructions FROM recipes;
 

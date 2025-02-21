@@ -1,4 +1,4 @@
-import { ScrollView, Text } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import { useEffect, useState } from 'react'
 
 import { getSharedRecipeById } from '../../api/calls/RecipeApi'
@@ -13,6 +13,7 @@ import AdditionalToolsWrapper from '../../components/datacomponents/additionalto
 import IngredientsWrapper from '../../components/datacomponents/ingredients/IngredientsWrapper'
 
 import GlobalStyles from '../../styles/GlobalStyles'
+import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
 
 const RecipeDetailsPage = ({
     route
@@ -40,10 +41,16 @@ const RecipeDetailsPage = ({
                 :
                 <ScrollView style={GlobalStyles.pageContainer}>
                     <RecipeName isForm={isForm} recipeName={recipe.recipe_name}/>
-                    <RecipeDescription isForm={isForm} recipeDescription={recipe.recipe_description} />
-                    <RecipePrepTime isForm={isForm} recipePrepTime={recipe.recipe_prep_time} />
-                    <RecipeCookTime isForm={isForm} recipeCookTime={recipe.recipe_cook_time} />
                     <RecipeTagsWrapper isForm={isForm} recipeTagsList={recipe.recipe_tags} />
+                    <RecipeDescription isForm={isForm} recipeDescription={recipe.recipe_description} />
+                    <View style={ComponentStyles.flexItemsRow}>
+                        <View style={[GlobalStyles.formItem, ComponentStyles.twoAcrossItem]}>
+                            <RecipePrepTime isForm={isForm} recipePrepTime={recipe.recipe_prep_time} />
+                        </View>
+                        <View style={[GlobalStyles.formItem, ComponentStyles.twoAcrossItem]}>
+                            <RecipeCookTime isForm={isForm} recipeCookTime={recipe.recipe_cook_time} />
+                        </View>
+                    </View>
                     <CookingMethodsWrapper isForm={isForm} cookingMethodsList={recipe.recipe_cooking_methods} />
                     <AdditionalToolsWrapper isForm={isForm} additionalToolsList={recipe.recipe_additional_tools} />
                     <IngredientsWrapper isForm={isForm} ingredientsList={recipe.recipe_ingredients} />

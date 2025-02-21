@@ -7,6 +7,9 @@ const ComponentStyles = StyleSheet.create({
         width: '100%',
         marginVertical: $spacingsmall
     },
+    descriptionWrapper: {
+        marginVertical: $spacingbase,
+    },
     flexItemsRow: {
         display: 'flex',
         flexDirection: 'row',
@@ -142,14 +145,15 @@ const ComponentStyles = StyleSheet.create({
     recipeTimeWrapper: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
     },
     recipeTimeItem: {
         width: '75%'
     },
     recipeTimeLabel: {
-        width: '20%',
+        width: '25%',
         alignSelf: 'center',
+        paddingLeft: $spacingextrasmall
     },
     removeButtonText: {
         borderRadius: $borderradiuslessrounded,
@@ -157,6 +161,9 @@ const ComponentStyles = StyleSheet.create({
         textAlign: 'center',
         padding: $spacingextrasmall,
         aspectRatio: 1
+    },
+    tagAndToolWrapper: {
+        alignItems: 'center',
     },
 })
 

@@ -23,7 +23,7 @@ const RecipeName = ({
         <>
             {
                 isForm ? 
-                <View>
+                <>
                     <View style={GlobalStyles.subsectionHeader}>
                         <TextElement textValue='Recipe Name' textStyle='xl' />
                     </View>
@@ -45,9 +45,9 @@ const RecipeName = ({
                             )
                         }}
                     />
-                </View>
+                </>
                 :
-                <View style={GlobalStyles.subsectionHeader}>
+                <View style={[GlobalStyles.subsectionHeader, GlobalStyles.pageHeader]}>
                     <TextElement textValue={recipeName} headingStyle='2'/>
                 </View>
             }
