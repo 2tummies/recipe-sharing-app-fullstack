@@ -19,11 +19,12 @@ def get_recipe_tags_for_recipe(recipeId):
         return cursor.fetchall()
 
 def add_recipe_tags(cursor, recipe_id, tags):
-    for tag in tags:
-        try:
+    try:
+        for tag in tags:
             cursor.execute(
                 "INSERT INTO recipe_recipe_tags(recipe_id, recipe_tag_id) VALUES (%s, %s)",
                 [recipe_id, tag[0]]
             )
-        except Exception as error:
-            print(f"Error inserting tag {tag[0]}: {error}")
+    except Exception as error:
+        print(f"Error inserting tags: {error}")
+        raise

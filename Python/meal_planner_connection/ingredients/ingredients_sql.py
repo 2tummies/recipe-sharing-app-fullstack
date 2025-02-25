@@ -33,12 +33,13 @@ def get_ingredients_for_recipe(recipeId):
         return recipe_ingredients_data
 
 def add_recipe_ingredients(cursor, recipe_id, ingredients):
-    for ingredient in ingredients:
-        try:
+    try:
+        for ingredient in ingredients:
             cursor.execute(
                 "INSERT INTO recipe_ingredient (recipe_id, ingredient_id, measurement_unit_id, measurement_quantity) " +
                 "VALUES (%s, %s, %s, %s)",
                 [recipe_id, ingredient['id'], ingredient['measurement_unit_id'], ingredient['measurement_unit_qty']]
             )
-        except Exception as error:
-            print(f"Error inserting tag {ingredient[0]}: {error}")
+    except Exception as error:
+        print(f"Error inserting ingredients: {error}")
+        raise

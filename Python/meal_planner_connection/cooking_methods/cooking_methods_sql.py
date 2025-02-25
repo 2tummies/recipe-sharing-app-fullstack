@@ -19,11 +19,12 @@ def get_cooking_methods_for_recipe(recipeId):
         return cursor.fetchall()
 
 def add_recipe_cooking_methods(cursor, recipe_id, cooking_methods):
-    for cooking_method in cooking_methods:
-        try:
+    try:
+        for cooking_method in cooking_methods:
             cursor.execute(
                 "INSERT INTO recipe_cooking_method (recipe_id, cooking_method_id, cooking_method_quantity) VALUES (%s, %s, 1)",
                 [recipe_id, cooking_method[0]]
             )
-        except Exception as error:
-            print(f"Error inserting tag {cooking_method[0]}: {error}")
+    except Exception as error:
+        print(f"Error inserting cooking method: {error}")
+        raise

@@ -72,13 +72,15 @@ def add_new_recipe(recipe):
             )
             recipe_id = cursor.fetchone()[0]
             ingredients_sql.add_recipe_ingredients(cursor, recipe_id, recipe['recipe_ingredients'])
-            additional_tools_sql.add_recipe_additional_tools(cursor, recipe_id, recipe['recipe_additional_tools'])
             cooking_methods_sql.add_recipe_cooking_methods(cursor, recipe_id, recipe['recipe_cooking_methods'])
-            recipe_tags_sql.add_recipe_tags(cursor, recipe_id, recipe['recipe_tags'])
+            if recipe['recipe_additional_tools'] is not None:
+                additional_tools_sql.add_recipe_additional_tools(cursor, recipe_id, recipe['recipe_additional_tools'])
+            if recipe['recipe_tags'] is not None:
+                recipe_tags_sql.add_recipe_tags(cursor, recipe_id, recipe['recipe_tags'])
         except(Exception) as error:
             connection.rollback()
-            print(error)
+            print(f"Error, recipe not created: {error}")
         else:
             connection.commit()
         finally:
-            print('success')
+            print('Task is finished, either success or failure')
