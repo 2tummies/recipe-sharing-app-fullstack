@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { View, TextInput, Text } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 
@@ -14,6 +14,11 @@ const RecipeCookTime = ({
 }) => {
     const { control } = useForm()
     const [ value, setValue ] = useState('')
+    const [ time, setTime ] = useState(0)
+
+    useEffect(() => {
+        setTime(recipeCookTime)
+    }, [])
 
     const handleChange = (value) => {
         setValue(value)
@@ -52,7 +57,7 @@ const RecipeCookTime = ({
                 </View>
                 :
                 <View style={ComponentStyles.recipeTimeWrapper}>
-                    <TextElement textValue={recipeCookTime} />
+                    <TextElement textValue={time} />
                     <View style={ComponentStyles.recipeTimeLabel}>
                         <TextElement textValue={'mins'} textAlign={'center'} />
                     </View>

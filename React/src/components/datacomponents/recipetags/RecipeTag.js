@@ -4,7 +4,9 @@ const RecipeTag = ({
     tagName
 }) => {
     return (
-        <TextElement textValue={tagName} />
+        <>
+            <TextElement textValue={tagName} />
+        </>
     )
 }
 
