@@ -17,6 +17,15 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
+    def create_user(self, request):
+        
+
+class LoginUserView():
+    serializer_class = UserSerializer
+
+    def validate_login(self, request):
+        return
+
 class IngredientListCreate(generics.ListCreateAPIView):
     serializer_class = IngredientSerializer
     # TODO: add in when authentication is active
@@ -70,13 +79,3 @@ class AddNewRecipe(generics.ListCreateAPIView):
             return Response({"message":"Recipe created successfully"}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({"message":"Error creating recipe: " + e}, status=status.HTTP_400_BAD_REQUEST)
-
-    # recipe_name = request.data.get('recipeName'),
-    # recipe_description = request.data.get('recipeDescription'),
-    # recipe_cook_time = request.data.get('recipeCookTime'),
-    # recipe_prep_time = request.data.get('recipePrepTime'),
-    # recipe_instructions = request.data.get('instructions'),
-    # recipe_ingredients = request.data.get('ingredients'),
-    # recipe_additional_tools = request.data.get('additionalTools'),
-    # recipe_cooking_methods = request.data.get('cookingMethods'),
-    # recipe_tags = request.data.get('recipeTags'),

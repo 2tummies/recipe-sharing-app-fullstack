@@ -1,42 +1,32 @@
 import { useState } from 'react'
-import { View, TextInput } from 'react-native'
+import { View, TextInput, Button } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import { useForm, Controller } from 'react-hook-form'
 
-import { login } from '../../api/user/UserApi'
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../constants'
+import { register } from '../../api/user/UserApi'
 
 import PressableButton from '../sharedcomponents/PressableButton'
 import GlobalStyles from '../../styles/GlobalStyles'
 import LoginAndRegisterStyles from '../../styles/additionalstyles/LoginAndRegisterStyles'
 
-const LoginForm = ({ navigation }) => {
+const RegisterForm = () => {
     const { handleSubmit, control } = useForm()
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
     const [loading, isLoading] = useState(false)
+    const navigation = useNavigation()
 
-    const handleUsername = (value) => {
-        setUsername(value)
-    }
-
-    const handlePassword = (value) => {
-        setPassword(value)
-    }
-
-    const onSubmit = async () => {
+    const onSubmit = async (data) => {
         isLoading(true)
-        // data.preventDefault()
-        const loginData = {
-            username: username,
-            password: password,
+        console.log(data)
+        const registerData = {
+            username: data['register-username'],
+            password: data['register-password'],
+            birthday: data['register-birthday']
         }
+        console.log(registerData)
         try {
-            // const res = await api.post(route, {username, password})
-            login(loginData)
-            localStorage.setItem(ACCESS_TOKEN, res.data.access)
-            localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
+            register(registerData)
             navigation.navigate('Home')
-        } catch (error) {
+        } catch(error) {
             alert(error)
         } finally {
             isLoading(false)
@@ -46,17 +36,17 @@ const LoginForm = ({ navigation }) => {
     return (
         <View style={LoginAndRegisterStyles.formWrapper}>
             <Controller
-                name='login-username'
+                name='register-username'
                 control={control}
                 rules={{
                     required : true
                 }}
-                render={({field: {onBlur, value}}) => {
+                render={({field: {onChange, onBlur, value}}) => {
                     return (
                         <TextInput
                             style={[GlobalStyles.formInputTextField, LoginAndRegisterStyles.textField]}
                             placeholder='Username'
-                            onChangeText={handleUsername}
+                            onChangeText={onChange}
                             value={value}
                             onBlur={onBlur}
                         />
@@ -64,7 +54,7 @@ const LoginForm = ({ navigation }) => {
                 }}
             />
             <Controller
-                name='login-password'
+                name='register-password'
                 control={control}
                 rules={{
                     required : true
@@ -74,7 +64,22 @@ const LoginForm = ({ navigation }) => {
                         <TextInput
                             style={[GlobalStyles.formInputTextField, LoginAndRegisterStyles.textField]}
                             placeholder='Password'
-                            onChangeText={handlePassword}
+                            onChangeText={onChange}
+                            value={value}
+                            onBlur={onBlur}
+                        />
+                    )
+                }}
+            />
+            <Controller
+                name='register-birthday'
+                control={control}
+                render={({field: {onChange, onBlur, value}}) => {
+                    return (
+                        <TextInput
+                            style={[GlobalStyles.formInputTextField, LoginAndRegisterStyles.textField]}
+                            placeholder='Bday'
+                            onChangeText={onChange}
                             value={value}
                             onBlur={onBlur}
                         />
@@ -82,10 +87,11 @@ const LoginForm = ({ navigation }) => {
                 }}
             />
             <View style={LoginAndRegisterStyles.submitButtonWrapper}>
-                <PressableButton buttonText='Login' onPressFunction={handleSubmit(onSubmit)} />
+                {/* <Button onPress={handleSubmit(onSubmit)} title='Register'/> */}
+                <PressableButton buttonText='Register' onPressFunction={handleSubmit(onSubmit)} />
             </View>
         </View>
     )
 }
 
-export default LoginForm
+export default RegisterForm

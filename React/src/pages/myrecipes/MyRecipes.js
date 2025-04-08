@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-// Components
 import MyRecipesLanding from './MyRecipesLanding'
 import MyRecipesCreateRecipe from './MyRecipesCreateRecipe'
 import MyRecipesList from './MyRecipesList'
@@ -8,7 +7,8 @@ import MyRecipesRandomRecipe from './MyRecipesRandomRecipe'
 
 const RecipeList = () => {
 
-    const MyRecipesStack = createNativeStackNavigator();
+    const MyRecipesStack = createNativeStackNavigator()
+
     return (
         <MyRecipesStack.Navigator
             screenOptions={{

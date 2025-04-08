@@ -9,6 +9,15 @@ DROP TABLE IF EXISTS ingredients;
 DROP TABLE IF EXISTS recipes;
 DROP TABLE IF EXISTS recipe_tags;
 DROP TABLE IF EXISTS ingredient_components;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE IF NOT EXISTS users(
+        user_id SERIAL PRIMARY KEY,
+        username VARCHAR(30) UNIQUE NOT NULL,
+        password_hash TEXT NOT NULL,
+        date_created DATE NOT NULL,
+        birthday DATE
+);
 
 CREATE TABLE IF NOT EXISTS cooking_methods(
         cooking_method_id SERIAL PRIMARY KEY,
@@ -47,7 +56,8 @@ CREATE TABLE IF NOT EXISTS recipes(
         recipe_description VARCHAR (500),
         recipe_cook_time SMALLINT,
         recipe_prep_time SMALLINT,
-        recipe_instructions VARCHAR[] NOT NULL
+        recipe_instructions VARCHAR[] NOT NULL,
+        is_shared BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS recipe_ingredient(
@@ -126,8 +136,6 @@ VALUES
 (DEFAULT, 'Tbsp'),
 (DEFAULT, 'Tsp'),
 (DEFAULT, 'Clove(s)'),
-(DEFAULT, 'Misc'),
-(DEFAULT, 'Each'),
 (DEFAULT, 'Slice(s)')
 ;
 

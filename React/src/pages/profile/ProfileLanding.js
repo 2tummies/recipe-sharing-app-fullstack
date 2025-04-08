@@ -8,12 +8,12 @@ const ProfileLanding = ({ navigation }) => {
         <View style={GlobalStyles.global}>
             <Text style={GlobalStyles.fontStyle}>Profile Landing</Text>
             <Button
-                title="Profile Details"
+                title='Profile Details'
                 style={GlobalStyles.buttonStyle}
                 onPress={() => navigation.navigate('ProfileDetails')}
             />
             <Button
-                title="Profile Preferences"
+                title='Profile Preferences'
                 onPress={() => navigation.navigate('ProfilePreferences')}
             />
         </View>

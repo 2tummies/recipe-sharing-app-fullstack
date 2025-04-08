@@ -1,9 +1,23 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
-const Register = () => {
+import RegisterForm from '../../components/forms/RegisterForm'
+import TextElement from '../../components/sharedcomponents/TextElement'
+
+import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
+import LoginAndRegisterStyles from '../../styles/additionalstyles/LoginAndRegisterStyles'
+
+const Register = ({ navigation }) => {
     return (
-        <View>
-            <Text>Login</Text>
+        <View style={LoginAndRegisterStyles.logAndRegPage}>
+            <RegisterForm />
+            <View style={LoginAndRegisterStyles.extraOptionsWrapper}>
+                <View style={ComponentStyles.twoAcrossItem}>
+                    <TextElement textValue='Already Have an Account?' textAlign='center' />
+                </View>
+                <View style={ComponentStyles.twoAcrossItem}>
+                <TextElement textValue='Forgot Password' textAlign='center' />
+                </View>
+            </View>
         </View>
     )
 }

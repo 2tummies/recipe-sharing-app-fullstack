@@ -1,17 +1,17 @@
 import React from 'react'
-import { View } from 'react-native'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import './src/styles/GlobalVariables'
 
-// Components
 import Home from './src/pages/Home'
 import Profile from './src/pages/profile/Profile'
 import ShareRecipes from './src/pages/sharerecipes/ShareRecipes'
 import MyRecipes from './src/pages/myrecipes/MyRecipes'
 import Login from './src/pages/users/Login'
 import Register from './src/pages/users/Register'
+import ForgotPassword from './src/pages/users/ForgotPassword'
 
 function Logout(navigation) {
   localStorage.clear()
@@ -25,13 +25,15 @@ function RegisterAndLogout() {
 
 function App({ navigation }) {
 
-  const Tab = createBottomTabNavigator();
+  const Tab = createBottomTabNavigator()
+  
+  const UserStack = createNativeStackNavigator()
 
-  let isLoggedIn = true;
+  let isLoggedIn = false
 
   return (
     <NavigationContainer theme={MyTheme}>
-      {isLoggedIn ? (
+      {isLoggedIn ?
         <Tab.Navigator
           screenOptions={{
             headerShown: false,
@@ -70,12 +72,24 @@ function App({ navigation }) {
             }}
           />
         </Tab.Navigator>
-      ) : (
-        <View>Logged Out</View>
-      )
+      :
+        <UserStack.Navigator>
+            <UserStack.Screen
+                name='Login'
+                component={Login}
+            />
+            <UserStack.Screen
+                name='Register'
+                component={Register}
+            />
+            <UserStack.Screen
+                name='ForgotPassword'
+                component={ForgotPassword}
+            />
+        </UserStack.Navigator>
       }
     </NavigationContainer>
-  );
+  )
 }
 
 export default App

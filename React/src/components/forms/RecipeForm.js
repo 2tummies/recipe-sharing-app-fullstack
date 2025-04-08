@@ -20,7 +20,7 @@ import { addNewRecipe } from '../../api/calls/RecipeApi'
 import GlobalStyles from '../../styles/GlobalStyles'
 import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
 
-const AddRecipeForm = ({redirOnSubmit}) => {
+const AddRecipeForm = ({ redirOnSubmit }) => {
     const { handleSubmit } = useForm()
     const [ loading, isLoading ] = useState(false)
     const [ isForm, setIsForm ] = useState(false)
