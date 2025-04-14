@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.contrib.auth import authenticate, login
 
 from .serializers import *
 from .ingredients import ingredients_sql
@@ -11,6 +12,7 @@ from .cooking_methods import cooking_methods_sql
 from .measurement_units import measurement_units_sql
 from .recipe_tags import recipe_tags_sql
 from .recipes import recipes_sql
+from .users import users_sql
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -18,13 +20,28 @@ class CreateUserView(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def create_user(self, request):
-        
+        try:
+            if User.objects.filter(username=request.data.get('username')).exists():
+                return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            User.objects.create_user(username=request.data.get('username'), password=request.data.get('password'))
+            new_user_id = users_sql.create_user(request.data)
+            return Response({'message':'User created successfully', 'user_id': new_user_id}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'message':'Error creating user: ' + e}, status=status.HTTP_400_BAD_REQUEST)
 
-class LoginUserView():
+class LoginUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
     def validate_login(self, request):
-        return
+        try:
+            user = authenticate(request, username=request.data.get('username'), password=request.data.get('password'))
+            if user is not None:
+                login(request, user)
+                return Response({'message': 'login successful', 'user_id': users_sql.get_id_by_username(user.username)})
+            else:
+                return Response({'error':'invalid credentials'})
+        except Exception as e:
+            return Response({'message':'Error logging in: ' + e}, status=status.HTTP_400_BAD_REQUEST)
 
 class IngredientListCreate(generics.ListCreateAPIView):
     serializer_class = IngredientSerializer
@@ -74,8 +91,7 @@ class AddNewRecipe(generics.ListCreateAPIView):
 
     def post(self, request):
         try:
-            print(request.data)
             recipes_sql.add_new_recipe(request.data)
-            return Response({"message":"Recipe created successfully"}, status=status.HTTP_201_CREATED)
+            return Response({'message':'Recipe created successfully'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({"message":"Error creating recipe: " + e}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message':'Error creating recipe: ' + e}, status=status.HTTP_400_BAD_REQUEST)

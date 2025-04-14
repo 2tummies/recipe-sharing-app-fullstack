@@ -14,7 +14,6 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users(
         user_id SERIAL PRIMARY KEY,
         username VARCHAR(30) UNIQUE NOT NULL,
-        password_hash TEXT NOT NULL,
         date_created DATE NOT NULL,
         birthday DATE
 );

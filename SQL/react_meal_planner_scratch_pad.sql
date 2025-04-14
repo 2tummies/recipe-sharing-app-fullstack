@@ -60,3 +60,20 @@ INSERT INTO recipe_recipe_tags(recipe_id, recipe_tag_id)
 VALUES
 (2, 1),
 (2, 2);
+
+INSERT INTO users(user_id, username, date_created, birthday)
+VALUES
+(DEFAULT, 'username1', '2025-04-14', '1995-01-28')
+(DEFAULT, 'username2', '2025-04-14', '1995-01-28');
+
+SELECT * FROM users;
+
+SELECT EXISTS (
+        SELECT username FROM users WHERE username='username3'
+);
+
+SELECT user_id FROM users WHERE username = 'username3';
+
+SELECT EXISTS (
+        SELECT username FROM users WHERE username = 'username' AND password_hash = 'password hash'
+);

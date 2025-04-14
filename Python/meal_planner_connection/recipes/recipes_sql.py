@@ -10,7 +10,7 @@ def get_shared_recipes_list():
     with connection.cursor() as cursor:
         cursor.execute("SELECT recipe_id, recipe_name, recipe_description FROM recipes WHERE is_shared = TRUE;")
         rows = cursor.fetchall()
-    return JsonResponse(rows, safe=False)
+        return JsonResponse(rows, safe=False)
 
 def get_recipe_basics(id):
     with connection.cursor() as cursor:

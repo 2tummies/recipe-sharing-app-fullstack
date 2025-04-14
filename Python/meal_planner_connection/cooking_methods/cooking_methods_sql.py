@@ -5,7 +5,7 @@ def get_all_cooking_methods():
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM cooking_methods;")
         rows = cursor.fetchall()
-    return JsonResponse(rows, safe=False)
+        return JsonResponse(rows, safe=False)
 
 def get_cooking_methods_for_recipe(recipeId):
     with connection.cursor() as cursor:
