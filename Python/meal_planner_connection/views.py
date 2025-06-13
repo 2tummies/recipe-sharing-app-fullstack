@@ -15,9 +15,9 @@ from .recipes import recipes_sql
 from .users import users_sql
 
 class CreateUserView(generics.CreateAPIView):
-    queryset = User.objects.all()
+    # queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    # permission_classes = [AllowAny]
 
     def create_user(self, request):
         try:
