@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import { View, TextInput, Button } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useState, useContext } from 'react'
+import { View, TextInput } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AuthContext } from '../../authentication/AuthContext'
 
 import { register } from '../../api/user/UserApi'
 
@@ -10,26 +11,29 @@ import GlobalStyles from '../../styles/GlobalStyles'
 import LoginAndRegisterStyles from '../../styles/additionalstyles/LoginAndRegisterStyles'
 
 const RegisterForm = () => {
-    const { handleSubmit, control } = useForm()
-    const [loading, isLoading] = useState(false)
-    const navigation = useNavigation()
+    const { setIsLoggedIn } = useContext(AuthContext)
+    const { handleSubmit, control } = useForm({
+        defaultValues: {
+            'register-username': '',
+            'register-password': ''
+        }
+    })
+    const [loading, setLoading] = useState(false)
 
     const onSubmit = async (data) => {
-        isLoading(true)
-        console.log(data)
+        setLoading(true)
         const registerData = {
             username: data['register-username'],
-            password: data['register-password'],
-            birthday: data['register-birthday']
+            password: data['register-password']
         }
-        console.log(registerData)
         try {
-            register(registerData)
-            navigation.navigate('Home')
+            await register(registerData)
+            await AsyncStorage.setItem('userToken', 'mock-token')
+            setIsLoggedIn(true)
         } catch(error) {
             alert(error)
         } finally {
-            isLoading(false)
+            setLoading(false)
         }
     }
 
@@ -38,6 +42,7 @@ const RegisterForm = () => {
             <Controller
                 name='register-username'
                 control={control}
+                defaultValue='Username'
                 rules={{
                     required : true
                 }}
@@ -67,27 +72,12 @@ const RegisterForm = () => {
                             onChangeText={onChange}
                             value={value}
                             onBlur={onBlur}
-                        />
-                    )
-                }}
-            />
-            <Controller
-                name='register-birthday'
-                control={control}
-                render={({field: {onChange, onBlur, value}}) => {
-                    return (
-                        <TextInput
-                            style={[GlobalStyles.formInputTextField, LoginAndRegisterStyles.textField]}
-                            placeholder='Bday'
-                            onChangeText={onChange}
-                            value={value}
-                            onBlur={onBlur}
+                            secureTextEntry={true}
                         />
                     )
                 }}
             />
             <View style={LoginAndRegisterStyles.submitButtonWrapper}>
-                {/* <Button onPress={handleSubmit(onSubmit)} title='Register'/> */}
                 <PressableButton buttonText='Register' onPressFunction={handleSubmit(onSubmit)} />
             </View>
         </View>

@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, status
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 from .serializers import *
 from .ingredients import ingredients_sql
@@ -14,30 +16,37 @@ from .recipe_tags import recipe_tags_sql
 from .recipes import recipes_sql
 from .users import users_sql
 
-class CreateUserView(generics.CreateAPIView):
-    # queryset = User.objects.all()
+class CreateUserView(APIView):
     serializer_class = UserSerializer
-    # permission_classes = [AllowAny]
+    permission_classes = [ AllowAny ]
 
-    def create_user(self, request):
+    def post(self, request):
         try:
-            if User.objects.filter(username=request.data.get('username')).exists():
+            username = request.data.get('username')
+            password = request.data.get('password')
+            if User.objects.filter(username=username).exists():
                 return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
-            User.objects.create_user(username=request.data.get('username'), password=request.data.get('password'))
-            new_user_id = users_sql.create_user(request.data)
-            return Response({'message':'User created successfully', 'user_id': new_user_id}, status=status.HTTP_201_CREATED)
+            User.objects.create_user(username=username, password=password)
+            # user.is_active= True
+            # user.save()
+            return Response({'message':'User created successfully', 'user_id': username}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({'message':'Error creating user: ' + e}, status=status.HTTP_400_BAD_REQUEST)
 
-class LoginUserView(generics.CreateAPIView):
+class LoginUserView(APIView):
     serializer_class = UserSerializer
+    permission_classes = [ AllowAny ]
 
-    def validate_login(self, request):
+    def post(self, request):
         try:
-            user = authenticate(request, username=request.data.get('username'), password=request.data.get('password'))
+            username = request.data.get('username')
+            password = request.data.get('password')
+            if not username or not password:
+                return Response({'message': 'add credentials'})      
+            user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return Response({'message': 'login successful', 'user_id': users_sql.get_id_by_username(user.username)})
+                return Response({'message': 'login successful', 'user': user.pk})
             else:
                 return Response({'error':'invalid credentials'})
         except Exception as e:

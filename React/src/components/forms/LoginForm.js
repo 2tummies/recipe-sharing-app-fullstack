@@ -1,45 +1,43 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { View, TextInput } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AuthContext } from '../../authentication/AuthContext'
 
 import { login } from '../../api/user/UserApi'
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../constants'
 
 import PressableButton from '../sharedcomponents/PressableButton'
 import GlobalStyles from '../../styles/GlobalStyles'
 import LoginAndRegisterStyles from '../../styles/additionalstyles/LoginAndRegisterStyles'
 
-const LoginForm = ({ navigation }) => {
-    const { handleSubmit, control } = useForm()
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [loading, isLoading] = useState(false)
+const LoginForm = () => {
+    const { setIsLoggedIn } = useContext(AuthContext)
+    const { handleSubmit, control } = useForm({
+        defaultValues: {
+            'login-username': '',
+            'login-password': ''
+        }
+    })
+    const [ loading, setLoading ] = useState(false)
 
-    const handleUsername = (value) => {
-        setUsername(value)
-    }
-
-    const handlePassword = (value) => {
-        setPassword(value)
-    }
-
-    const onSubmit = async () => {
-        isLoading(true)
-        // data.preventDefault()
+    const onSubmit = async (data) => {
+        setLoading(true)
         const loginData = {
-            username: username,
-            password: password,
+            username: data['login-username'],
+            password: data['login-password'],
         }
         try {
-            // const res = await api.post(route, {username, password})
-            login(loginData)
-            localStorage.setItem(ACCESS_TOKEN, res.data.access)
-            localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
-            navigation.navigate('Home')
+            const result = await login(loginData)
+            if (result?.error) {
+                alert(result.error)
+                return
+            }
+            await AsyncStorage.setItem('userToken', 'mock-token')
+            setIsLoggedIn(true)
         } catch (error) {
-            alert(error)
+            alert(error?.error || 'Login failed')
         } finally {
-            isLoading(false)
+            setLoading(false)
         }
     }
 
@@ -51,12 +49,12 @@ const LoginForm = ({ navigation }) => {
                 rules={{
                     required : true
                 }}
-                render={({field: {onBlur, value}}) => {
+                render={({field: {onChange, onBlur, value}}) => {
                     return (
                         <TextInput
                             style={[GlobalStyles.formInputTextField, LoginAndRegisterStyles.textField]}
                             placeholder='Username'
-                            onChangeText={handleUsername}
+                            onChangeText={onChange}
                             value={value}
                             onBlur={onBlur}
                         />
@@ -74,9 +72,10 @@ const LoginForm = ({ navigation }) => {
                         <TextInput
                             style={[GlobalStyles.formInputTextField, LoginAndRegisterStyles.textField]}
                             placeholder='Password'
-                            onChangeText={handlePassword}
+                            onChangeText={onChange}
                             value={value}
                             onBlur={onBlur}
+                            secureTextEntry={true}
                         />
                     )
                 }}

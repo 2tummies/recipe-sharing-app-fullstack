@@ -1,9 +1,10 @@
 import { View, Text, Button } from 'react-native'
+import useLogout from '../../hooks/users/useLogout'
 
-// Styles
 import GlobalStyles from '../../styles/GlobalStyles'
 
 const ProfileLanding = ({ navigation }) => {
+    const logout = useLogout()
     return (
         <View style={GlobalStyles.global}>
             <Text style={GlobalStyles.fontStyle}>Profile Landing</Text>
@@ -15,6 +16,10 @@ const ProfileLanding = ({ navigation }) => {
             <Button
                 title='Profile Preferences'
                 onPress={() => navigation.navigate('ProfilePreferences')}
+            />
+            <Button
+                title='Logout'
+                onPress={logout}
             />
         </View>
     )
