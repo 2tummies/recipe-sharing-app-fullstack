@@ -66,6 +66,7 @@ VALUES
 (DEFAULT, 'username1', '2025-04-14', '1995-01-28')
 (DEFAULT, 'username2', '2025-04-14', '1995-01-28');
 
+SELECT * FROM public.auth_user;
 SELECT * FROM users;
 
 SELECT EXISTS (
@@ -77,3 +78,9 @@ SELECT user_id FROM users WHERE username = 'username3';
 SELECT EXISTS (
         SELECT username FROM users WHERE username = 'username' AND password_hash = 'password hash'
 );
+
+SELECT table_name FROM information_schema.tables
+WHERE table_schema='public' AND table_type='BASE TABLE';
+
+SET search_path TO public;
+SELECT * FROM auth_user;

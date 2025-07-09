@@ -27,8 +27,6 @@ class CreateUserView(APIView):
             if User.objects.filter(username=username).exists():
                 return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
             User.objects.create_user(username=username, password=password)
-            # user.is_active= True
-            # user.save()
             return Response({'message':'User created successfully', 'user_id': username}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({'message':'Error creating user: ' + e}, status=status.HTTP_400_BAD_REQUEST)
