@@ -73,6 +73,22 @@ const RegisterForm = () => {
                             value={value}
                             onBlur={onBlur}
                             secureTextEntry={true}
+                            autoCapitalize='none'
+                        />
+                    )
+                }}
+            />
+            <Controller
+                name='register-birthday'
+                control={control}
+                render={({field: {onChange, onBlur, value}}) => {
+                    return (
+                        <TextInput
+                            style={[GlobalStyles.formInputTextField, LoginAndRegisterStyles.textField]}
+                            placeholder='Birthday'
+                            onChangeText={onChange}
+                            value={value}
+                            onBlur={onBlur}
                         />
                     )
                 }}
