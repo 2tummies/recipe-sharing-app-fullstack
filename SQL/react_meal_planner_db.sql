@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS user_recipe_list(
 CREATE TABLE IF NOT EXISTS recipe_ingredient(
         recipe_id INT REFERENCES recipes,
         ingredient_id INT REFERENCES ingredients,
-        measurement_unit SMALLINT REFERENCES measurement_units,
+        measurement_unit_id SMALLINT REFERENCES measurement_units,
         measurement_quantity DECIMAL NOT NULL,
 
         PRIMARY KEY (recipe_id, ingredient_id, measurement_unit) 
