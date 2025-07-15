@@ -40,7 +40,7 @@ class BaseRecipeSerializer(serializers.ModelSerializer):
         model = BaseRecipe
         fields = ['recipe_id', 'recipe_name', 'recipe_description', 'recipe_cook_time', 'recipe_prep_time', 'recipe_instructions', 'author_id']
 
-class DetaildRecipeSerializer(serializers.ModelSerializer):
+class DetailedRecipeSerializer(serializers.ModelSerializer):
    class Meta:
        model = DetailedRecipe
        fields = ['recipe_id', 'recipe_name', 'recipe_description', 'recipe_cook_time', 'recipe_prep_time', 'recipe_instructions', 'author_id', 'recipe_ingredients', 'recipe_additional_tools', 'recipe_cooking_methods', 'recipe_tags']

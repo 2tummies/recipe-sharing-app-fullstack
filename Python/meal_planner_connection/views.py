@@ -89,14 +89,14 @@ class SharedRecipesListCreate(generics.ListCreateAPIView):
         return recipes_sql.get_shared_recipes_list()
 
 class GetSharedRecipeById(generics.ListCreateAPIView):
-    serializer_class = DetaildRecipeSerializer
+    serializer_class = DetailedRecipeSerializer
 
     def get(self, request, *args, **kwargs):
         recipe_id = kwargs['recipe_id']
         return recipes_sql.get_shared_recipe_by_id(recipe_id)
     
 class AddNewRecipe(generics.ListCreateAPIView):
-    serializer_class = DetaildRecipeSerializer
+    serializer_class = DetailedRecipeSerializer
 
     def post(self, request):
         try:
