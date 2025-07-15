@@ -10,8 +10,9 @@ DROP TABLE IF EXISTS ingredients;
 DROP TABLE IF EXISTS recipes;
 DROP TABLE IF EXISTS recipe_tags;
 DROP TABLE IF EXISTS ingredient_components;
-DROP TABLE IF EXISTS users;
+--DROP TABLE IF EXISTS users;
 
+--TODO: move users to new file, add other auth stuff
 CREATE TABLE IF NOT EXISTS users(
         user_id SERIAL PRIMARY KEY,
         username VARCHAR(30) UNIQUE NOT NULL,
@@ -62,7 +63,8 @@ CREATE TABLE IF NOT EXISTS recipes(
         recipe_cook_time SMALLINT,
         recipe_prep_time SMALLINT,
         recipe_instructions VARCHAR(150)[15] NOT NULL,
-        is_shared BOOLEAN
+        is_shared BOOLEAN,
+        author_id INT REFERENCES users
 );
 
 CREATE TABLE IF NOT EXISTS user_recipe_list(
@@ -78,7 +80,7 @@ CREATE TABLE IF NOT EXISTS recipe_ingredient(
         measurement_unit_id SMALLINT REFERENCES measurement_units,
         measurement_quantity DECIMAL NOT NULL,
 
-        PRIMARY KEY (recipe_id, ingredient_id, measurement_unit) 
+        PRIMARY KEY (recipe_id, ingredient_id, measurement_unit_id) 
 );
 
 CREATE TABLE IF NOT EXISTS recipe_cooking_method(
@@ -104,6 +106,7 @@ CREATE TABLE IF NOT EXISTS recipe_recipe_tags(
         PRIMARY KEY (recipe_id, recipe_tag_id)
 );
 
+--TODO: move data to new file
 INSERT INTO cooking_methods (cooking_method_id, cooking_method_name)
 VALUES
 (DEFAULT, 'Oven'),

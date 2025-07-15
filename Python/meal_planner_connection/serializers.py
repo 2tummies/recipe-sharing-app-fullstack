@@ -35,17 +35,14 @@ class RecipeTagsSerializer(serializers.ModelSerializer):
         model = RecipeTags
         fields = ['recipe_tag_id', 'recipe_tag_name']
 
-# TODO: Add recipe ingredient, additional tools, cooking methods and tags serializers, extending other ones; maybe all coming from a recipe item?
-
-# TODO: Add base recipe object and after add extended recipe
-class RecipesSerializer(serializers.ModelSerializer):
-   class Meta:
-       model = Recipe
-       fields = ['recipe_id', 'recipe_name', 'recipe_description', 'recipe_cook_time', 'recipe_prep_time', 'recipe_instructions', 'recipe_ingredients', 'recipe_additional_tools', 'recipe_cooking_methods', 'recipe_tags']
-
-class UserRecipeListItemSerializer(serializers.ModelSerializer):
+class BaseRecipeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserRecipeListItem
-        fields = ['user_id', 'recipe_id']
-        
+        model = BaseRecipe
+        fields = ['recipe_id', 'recipe_name', 'recipe_description', 'recipe_cook_time', 'recipe_prep_time', 'recipe_instructions', 'author_id']
+
+class DetaildRecipeSerializer(serializers.ModelSerializer):
+   class Meta:
+       model = DetailedRecipe
+       fields = ['recipe_id', 'recipe_name', 'recipe_description', 'recipe_cook_time', 'recipe_prep_time', 'recipe_instructions', 'author_id', 'recipe_ingredients', 'recipe_additional_tools', 'recipe_cooking_methods', 'recipe_tags']
+
 # TODO: Add serializer for comprehensive list of recipes by user

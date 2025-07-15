@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
+from .recipe_tags import recipe_tags_sql
+from .additional_tools import additional_tools_sql
+from .cooking_methods import cooking_methods_sql
+from .ingredients import ingredients_sql
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, password=None, birthday=None):
@@ -84,6 +88,7 @@ class Recipe(models.Model):
         blank=True,
         null=True
     )
+    author_id = models.ForeignKey(CustomUser, models.DO_NOTHING, db_column='user_id')
 
     class Meta:
         managed = False
@@ -113,7 +118,7 @@ class RecipeIngredient(models.Model):
     recipe_id = models.ForeignKey(Recipe, models.DO_NOTHING, db_column='recipe_id')
     ingredient_id = models.ForeignKey(Ingredient, models.DO_NOTHING, db_column='ingredient_id')
     measurement_unit_id = models.ForeignKey(MeasurementUnit, models.DO_NOTHING, db_column='measurement_unit_id', blank=True, null=True)
-    measurement_quantity = models.DecimalField()
+    measurement_quantity = models.DecimalField(decimal_places=2, max_digits=6)
 
     class Meta:
         managed = False
@@ -128,5 +133,51 @@ class UserRecipeListItem(models.Model):
         managed = False
         db_table = 'user_recipe_list'
         constraints = [models.UniqueConstraint(fields=['user_id', 'recipe_id'], name='unique_user_recipe')]
+
+class RecipeTagList:
+    def __init__(self, recipe: Recipe):
+        self.recipe_id = recipe.recipe_id
+        self.tags_list = self.get_tags()
+    def get_tags(self):
+        return recipe_tags_sql.get_recipe_tags_for_recipe(self.recipe_id)
+    
+class AdditionalToolList:
+    def __init__(self, recipe: Recipe):
+        self.recipe_id = recipe.recipe_id
+        self.additional_tool_list = self.get_additional_tools()
+    def get_additional_tools(self):
+        return additional_tools_sql.get_additional_tools_for_recipe(self.recipe_id)
+    
+class CookingMethodList:
+    def __init__(self, recipe: Recipe):
+        self.recipe_id = recipe.recipe_id
+        self.cooking_method_list = self.get_cooking_methods()
+    def get_cooking_methods(self):
+        return cooking_methods_sql.get_cooking_methods_for_recipe(self.recipe_id)
+    
+class IngredientList:
+    def __init__(self, recipe: Recipe):
+        self.recipe_id = recipe.recipe_id
+        self.ingredients_list = self.get_ingredients()
+    def get_ingredients(self):
+        return ingredients_sql.get_ingredients_for_recipe(self.recipe_id)
+
+class BaseRecipe:
+    def __init__(self, recipe: Recipe):
+        self.recipe_id = recipe.recipe_id
+        self.recipe_name = recipe.recipe_name
+        self.recipe_description = recipe.recipe_description
+        self.recipe_cook_time = recipe.recipe_cook_time
+        self.recipe_prep_time = recipe.recipe_prep_time
+        self.recipe_instructions = recipe.recipe_instructions
+        self.author_id = recipe.author_id
+
+class DetailedRecipe(BaseRecipe):
+    def __init__(self, recipe):
+        super().__init__(recipe)
+        self.tag_list = RecipeTagList(self.recipe_id).tags_list
+        self.additional_tool_list = AdditionalToolList(self.recipe_id).additional_tool_list
+        self.cooking_method_list = CookingMethodList(self.recipe_id).cooking_method_list
+        self.ingredients_list = IngredientList(self.recipe_id).ingredients_list
 
 # TODO: Add model for comprehensive list of recipes by user
