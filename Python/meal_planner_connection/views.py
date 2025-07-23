@@ -4,8 +4,7 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, get_user_model
 
 from .serializers import *
 from .ingredients import ingredients_sql
@@ -14,7 +13,8 @@ from .cooking_methods import cooking_methods_sql
 from .measurement_units import measurement_units_sql
 from .recipe_tags import recipe_tags_sql
 from .recipes import recipes_sql
-from .users import users_sql
+
+User = get_user_model()
 
 class CreateUserView(APIView):
     serializer_class = UserSerializer
@@ -23,13 +23,18 @@ class CreateUserView(APIView):
     def post(self, request):
         try:
             username = request.data.get('username')
-            password = request.data.get('password')
+            data = {
+                'username': username,
+                'password': request.data.get('password'),
+            }
+            if birthday := request.data.get('birthday'):
+                data['birthday'] = birthday
             if User.objects.filter(username=username).exists():
                 return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
-            User.objects.create_user(username=username, password=password)
+            User.objects.create_user(**data)
             return Response({'message':'User created successfully', 'user_id': username}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'message':'Error creating user: ' + e}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message':'Error creating user'}, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginUserView(APIView):
     serializer_class = UserSerializer
@@ -52,8 +57,7 @@ class LoginUserView(APIView):
 
 class IngredientListCreate(generics.ListCreateAPIView):
     serializer_class = IngredientSerializer
-    # TODO: add in when authentication is active
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         return ingredients_sql.get_ingredients_list()
@@ -84,6 +88,7 @@ class CookingMethodListCreate(generics.ListCreateAPIView):
     
 class SharedRecipesListCreate(generics.ListCreateAPIView):
     serializer_class = BaseRecipeSerializer
+    permission_classes = [ AllowAny ]
 
     def get(self, request):
         return recipes_sql.get_shared_recipes_list()

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.utils import timezone
 
 from .recipe_tags import recipe_tags_sql
 from .additional_tools import additional_tools_sql
@@ -8,10 +9,17 @@ from .cooking_methods import cooking_methods_sql
 from .ingredients import ingredients_sql
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, password=None, birthday=None):
+    def create_user(self, username, password=None, **extra_fields):
         if not username:
             raise ValueError('Users need a username')
-        user = self.model(username=username, birthday=birthday)
+        current_time = timezone.now()
+        extra_fields.setdefault('birthday', None)
+        extra_fields.setdefault('is_active', True)
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('last_login', current_time)
+        extra_fields.setdefault('date_joined', current_time)
+        user = self.model(username=username, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -19,8 +27,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser):
     user_id = models.AutoField(primary_key=True)
     username = models.CharField(null=False, max_length=30, unique=True)
-    # TODO: Verify that null=false is needed
-    password = models.TextField(null=False)
+    password = models.TextField(null=False, db_column='password_hash')
     date_joined = models.DateField(auto_now_add=True)
     birthday = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)

@@ -41,8 +41,18 @@ class BaseRecipeSerializer(serializers.ModelSerializer):
         fields = ['recipe_id', 'recipe_name', 'recipe_description', 'recipe_cook_time', 'recipe_prep_time', 'recipe_instructions', 'author_id']
 
 class DetailedRecipeSerializer(serializers.ModelSerializer):
-   class Meta:
-       model = DetailedRecipe
-       fields = ['recipe_id', 'recipe_name', 'recipe_description', 'recipe_cook_time', 'recipe_prep_time', 'recipe_instructions', 'author_id', 'recipe_ingredients', 'recipe_additional_tools', 'recipe_cooking_methods', 'recipe_tags']
+    recipe_ingredients = serializers.SerializerMethodField()
+    recipe_additional_tools = serializers.SerializerMethodField()
+    recipe_tags= serializers.SerializerMethodField()
+    recipe_cooking_methods= serializers.SerializerMethodField()
+
+    class Meta(BaseRecipeSerializer.Meta):
+        model = DetailedRecipe
+        fields = BaseRecipeSerializer.Meta.fields + [
+            'recipe_ingredients',
+            'recipe_additional_tools',
+            'recipe_tags',
+            'recipe_cooking_methods'
+        ]
 
 # TODO: Add serializer for comprehensive list of recipes by user
