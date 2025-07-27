@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Components
 import ProfileLanding from './ProfileLanding';
 import ProfilePreferences from './ProfilePreferences';
 import ProfileDetails from './ProfileDetails';

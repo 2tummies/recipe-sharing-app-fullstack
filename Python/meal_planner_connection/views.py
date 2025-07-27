@@ -49,11 +49,12 @@ class LoginUserView(APIView):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return Response({'message': 'login successful', 'user': user.pk})
+                
+                return Response({'user_id': user.user_id, 'username': user.username})
             else:
                 return Response({'error':'invalid credentials'})
         except Exception as e:
-            return Response({'message':'Error logging in: ' + e}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message':'Error logging in'}, status=status.HTTP_400_BAD_REQUEST)
 
 class IngredientListCreate(generics.ListCreateAPIView):
     serializer_class = IngredientSerializer

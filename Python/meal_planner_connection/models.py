@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
 
 from .recipe_tags import recipe_tags_sql
@@ -23,8 +23,23 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+    
+    def create_superuser(self, username, password=None, **extra_fields):
+        if not username:
+            raise ValueError('Users need a username')
+        current_time = timezone.now()
+        extra_fields.setdefault('birthday', None)
+        extra_fields.setdefault('is_active', True)
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('last_login', current_time)
+        extra_fields.setdefault('date_joined', current_time)
+        user = self.model(username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     user_id = models.AutoField(primary_key=True)
     username = models.CharField(null=False, max_length=30, unique=True)
     password = models.TextField(null=False, db_column='password_hash')

@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AuthContext } from '../../authentication/AuthContext'
 
 import { login } from '../../api/user/UserApi'
+import useUserData from '../../hooks/users/useUserData'
 
 import PressableButton from '../sharedcomponents/PressableButton'
 import GlobalStyles from '../../styles/GlobalStyles'
@@ -12,6 +13,7 @@ import LoginAndRegisterStyles from '../../styles/additionalstyles/LoginAndRegist
 
 const LoginForm = () => {
     const { setIsLoggedIn } = useContext(AuthContext)
+    const persistUserData = useUserData()
     const { handleSubmit, control } = useForm({
         defaultValues: {
             'login-username': '',
@@ -33,6 +35,7 @@ const LoginForm = () => {
                 return
             }
             await AsyncStorage.setItem('userToken', 'mock-token')
+            await persistUserData(result)
             setIsLoggedIn(true)
         } catch (error) {
             alert(error?.error || 'Login failed')
@@ -76,6 +79,7 @@ const LoginForm = () => {
                             value={value}
                             onBlur={onBlur}
                             secureTextEntry={true}
+                            autoCapitalize='none'
                         />
                     )
                 }}

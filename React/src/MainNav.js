@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useContext } from 'react'
+import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { AuthContext } from './authentication/AuthContext'
 
@@ -10,20 +9,16 @@ import Home from './pages/Home'
 import Profile from './pages/profile/Profile'
 import ShareRecipes from './pages/sharerecipes/ShareRecipes'
 import MyRecipes from './pages/myrecipes/MyRecipes'
-import Login from './pages/users/Login'
-import Register from './pages/users/Register'
-import ForgotPassword from './pages/users/ForgotPassword'
+import GuestAccount from './pages/users/GuestAccount'
 
 function MainNav({ navigation }) {
     const { isLoggedIn } = useContext(AuthContext)
     const Tab = createBottomTabNavigator()
-    const UserStack = createNativeStackNavigator()
 
     if (isLoggedIn === null) return null
     
     return (
       <NavigationContainer theme={MyTheme}>
-        {isLoggedIn ?
           <Tab.Navigator
             screenOptions={{
               headerShown: false,
@@ -47,37 +42,35 @@ function MainNav({ navigation }) {
                 title: 'Share Recipes'
               }}
             />
-            <Tab.Screen
-              name='MyRecipes'
-              component={MyRecipes}
-              options={{
-                title: 'My Recipes'
-              }}
-            />
-            <Tab.Screen
-              name='Profile'
-              component={Profile}
-              options={{
-                title: 'Profile'
-              }}
-            />
+            {isLoggedIn ?
+              <>
+                <Tab.Screen
+                  name='MyRecipes'
+                  component={MyRecipes}
+                  options={{
+                    title: 'My Recipes'
+                  }}
+                />
+                <Tab.Screen
+                  name='Profile'
+                  component={Profile}
+                  options={{
+                    title: 'Profile'
+                  }}
+                />
+              </>
+            :
+              <>
+                <Tab.Screen
+                  name='Account'
+                  component={GuestAccount}
+                  options={{
+                    title: 'Account'
+                  }}
+                />
+              </>
+            }
           </Tab.Navigator>
-        :
-          <UserStack.Navigator>
-              <UserStack.Screen
-                  name='Login'
-                  component={Login}
-              />
-              <UserStack.Screen
-                  name='Register'
-                  component={Register}
-              />
-              <UserStack.Screen
-                  name='ForgotPassword'
-                  component={ForgotPassword}
-              />
-          </UserStack.Navigator>
-        }
       </NavigationContainer>
     )
 }
