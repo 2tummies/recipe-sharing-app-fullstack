@@ -32,14 +32,14 @@ function MainNav({ navigation }) {
               name='Home'
               component={Home}
               options={{
-                title: 'Home Page'
+                title: 'Home'
               }}
             />
             <Tab.Screen
               name='ShareRecipes'
               component={ShareRecipes}
               options={{
-                title: 'Share Recipes'
+                title: 'Find Recipes'
               }}
             />
             {isLoggedIn ?
@@ -48,7 +48,7 @@ function MainNav({ navigation }) {
                   name='MyRecipes'
                   component={MyRecipes}
                   options={{
-                    title: 'My Recipes'
+                    title: 'Saved Recipes'
                   }}
                 />
                 <Tab.Screen
