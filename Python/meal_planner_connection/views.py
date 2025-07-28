@@ -49,7 +49,6 @@ class LoginUserView(APIView):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                
                 return Response({'user_id': user.user_id, 'username': user.username})
             else:
                 return Response({'error':'invalid credentials'})

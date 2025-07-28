@@ -1,15 +1,24 @@
 import { View, Text, Button, ScrollView } from 'react-native'
 
-import SharedRecipesList from '../../components/datacomponents/sharedrecipes/SharedRecipesList'
+import RecipesList from '../../components/datacomponents/recipes/RecipesList'
 
 const ShareRecipesLanding = ({navigation}) => {
+    const [ isSharedList, setIsSharedList ] = useState()
+
+    useEffect(() => {
+        const initSharedRecipes = () => {
+            setIsSharedList(true)
+        }
+
+        initSharedRecipes()
+    }, [])
     return (
         <ScrollView>
             <Button
                 title='Share a Recipe'
             />
             <Text>Look for a Recipe</Text>
-            <SharedRecipesList navigation={navigation} />
+            <RecipesList navigation={navigation} isSharedList={isSharedList} />
         </ScrollView>
     )
 }
