@@ -66,7 +66,6 @@ VALUES
 (DEFAULT, 'username1', '2025-04-14', '1995-01-28')
 (DEFAULT, 'username2', '2025-04-14', '1995-01-28');
 
-SELECT * FROM public.auth_user;
 SELECT * FROM users;
 
 SELECT EXISTS (
@@ -78,6 +77,9 @@ SELECT user_id FROM users WHERE username = 'username3';
 SELECT EXISTS (
         SELECT username FROM users WHERE username = 'username' AND password_hash = 'password hash'
 );
+
+INSERT INTO recipes (recipe_id, recipe_name, recipe_description, recipe_cook_time, recipe_prep_time, recipe_instructions, is_shared, author_id)
+VALUES (DEFAULT, 'name2', 'desc', 90, 90, ARRAY['step 1', 'step 2'], true, 1);
 
 SELECT table_name FROM information_schema.tables
 WHERE table_schema='public' AND table_type='BASE TABLE';

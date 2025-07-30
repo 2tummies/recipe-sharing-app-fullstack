@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS recipe_tags(
         recipe_tag_name TEXT UNIQUE NOT NULL
 );
 
+-- TODO: update PK to include author_id so name can be not unique
 CREATE TABLE IF NOT EXISTS recipes(
         recipe_id SERIAL PRIMARY KEY,
         recipe_name VARCHAR(100) UNIQUE NOT NULL,
