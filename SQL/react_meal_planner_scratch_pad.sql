@@ -78,6 +78,11 @@ SELECT EXISTS (
         SELECT username FROM users WHERE username = 'username' AND password_hash = 'password hash'
 );
 
+SELECT recipe_id, recipe_name, recipe_description, username
+FROM recipes
+JOIN users ON users.user_id = recipes.author_id
+WHERE is_shared = TRUE;
+
 INSERT INTO recipes (recipe_id, recipe_name, recipe_description, recipe_cook_time, recipe_prep_time, recipe_instructions, is_shared, author_id)
 VALUES (DEFAULT, 'name2', 'desc', 90, 90, ARRAY['step 1', 'step 2'], true, 1);
 

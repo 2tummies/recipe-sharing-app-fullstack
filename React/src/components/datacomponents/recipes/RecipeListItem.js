@@ -9,8 +9,8 @@ const RecipeListItem = ({
             <Text>Name: {recipe[1]}</Text>
             <Text>Desc: {recipe[2]}</Text>
             {
-                isSharedList ??
-                    <Text>Author: Will go here</Text>
+                isSharedList &&
+                    <Text>Author: {recipe[3]}</Text>
             }
             
         </View>
