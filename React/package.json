@@ -37,7 +37,8 @@
     "react-native-screens": "3.31.1",
     "react-native-select-dropdown": "^4.0.1",
     "react-native-web": "^0.19.12",
-    "react-router-dom": "^6.26.2"
+    "react-router-dom": "^6.26.2",
+    "expo-dev-client": "~4.0.29"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2"

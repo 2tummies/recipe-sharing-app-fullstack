@@ -40,6 +40,12 @@
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "9ab9ea76-e4eb-464e-b21c-89f6932a2b9e"
+      }
+    },
+    "owner": "2tummies"
   }
 }
