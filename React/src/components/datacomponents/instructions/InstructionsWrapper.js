@@ -50,7 +50,6 @@ const InstructionsWrapper = ({
 
     const editInstructionsArray = instructionsList.map((instruction, index) => {
         if (isForm) {
-            // const updatedInstruction = isForm ? instruction : { step: index + 1, text: instruction}
             return (
                 <View key={instruction.step} style={ComponentStyles.arrayItemWrapper}>
                     <Instruction instruction={instruction} isForm={isForm} instructionsList={instructionsList} setInstructionsList={setInstructionsList} />

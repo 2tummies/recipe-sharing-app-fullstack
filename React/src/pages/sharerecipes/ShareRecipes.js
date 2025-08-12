@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-// Components
 import ShareRecipesLanding from './ShareRecipesLanding'
 import FilterRecipes from './FilterRecipes'
 import RecipeDetailsPage from './RecipeDetailsPage'

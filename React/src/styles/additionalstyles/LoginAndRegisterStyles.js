@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native'
 const LoginAndRegisterStyles = StyleSheet.create({
     logAndRegPage: {
         height: '100%',
-        // width: '100%',
         backgroundColor: $greenpale,
         padding: $containerspacingbase,
         display: 'flex',

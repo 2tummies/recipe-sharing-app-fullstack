@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { View, Text, Button, ScrollView } from 'react-native'
+import { Text, Button, ScrollView } from 'react-native'
 
 import RecipesList from '../../components/datacomponents/recipes/RecipesList'
 
