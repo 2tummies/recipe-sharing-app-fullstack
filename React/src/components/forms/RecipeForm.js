@@ -2,9 +2,8 @@ import { View, TextInput, StyleSheet, Text } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 
-// Components
-import PressableButton from '../sharedcomponents/PressableButton'
-
+import { useContext } from 'react'
+import { AuthContext } from '../../authentication/AuthContext'
 import RecipeName from '../datacomponents/recipebasics/RecipeName'
 import RecipeDescription from '../datacomponents/recipebasics/RecipeDescription'
 import RecipePrepTime from '../datacomponents/recipebasics/RecipePrepTime'
@@ -15,13 +14,14 @@ import AdditionalToolsWrapper from '../datacomponents/additionaltools/Additional
 import IngredientsWrapper from '../datacomponents/ingredients/IngredientsWrapper'
 import InstructionsWrapper from '../datacomponents/instructions/InstructionsWrapper'
 import { addNewRecipe } from '../../api/calls/RecipeApi'
+import PressableButton from '../sharedcomponents/PressableButton'
 
-// Styles
 import GlobalStyles from '../../styles/GlobalStyles'
 import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
 
 const AddRecipeForm = ({ redirOnSubmit }) => {
     const { handleSubmit } = useForm()
+    const { userId } = useContext(AuthContext)
     const [ loading, isLoading ] = useState(false)
     const [ isForm, setIsForm ] = useState(false)
 
@@ -77,6 +77,7 @@ const AddRecipeForm = ({ redirOnSubmit }) => {
 
     const onSubmitForm = async () => {
         isLoading(true)
+        // TODO: add in is_shared value when setup
         const finalData = {
             recipe_name: recipeName,
             recipe_description: recipeDescription,
@@ -87,6 +88,7 @@ const AddRecipeForm = ({ redirOnSubmit }) => {
             recipe_tags: recipeTagsList,
             recipe_ingredients: ingredientsList,
             recipe_instructions: instructionsList,
+            author_id: userId
         }
         try {
             console.log('console right before post')
