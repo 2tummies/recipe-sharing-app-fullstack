@@ -16,3 +16,20 @@ def get_id_by_username(username):
         except Exception as e:
             connection.rollback()
             print(e)
+
+def get_username_by_id(id):
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute(
+                "SELECT username FROM users WHERE id = %s;",
+                [id]
+            )
+            username = cursor.fetchone()
+            if username is not None:
+                return username
+            else:
+                print('not found')
+                return None
+        except Exception as e:
+            connection.rollback()
+            print(e)

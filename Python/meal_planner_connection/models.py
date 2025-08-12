@@ -7,6 +7,7 @@ from .recipe_tags import recipe_tags_sql
 from .additional_tools import additional_tools_sql
 from .cooking_methods import cooking_methods_sql
 from .ingredients import ingredients_sql
+from .users import users_sql
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, password=None, **extra_fields):
@@ -53,6 +54,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'
+
+    def id(self):
+        return self.user_id
 
     class Meta:
         managed = False
@@ -192,7 +196,9 @@ class BaseRecipe:
         self.recipe_cook_time = recipe.recipe_cook_time
         self.recipe_prep_time = recipe.recipe_prep_time
         self.recipe_instructions = recipe.recipe_instructions
-        self.author_id = recipe.author_id
+        self.author_username = self.get_author_by_id(recipe.recipe_id)
+    def get_author_by_id(self, id):
+        return users_sql.get_username_by_id(id)
 
 class DetailedRecipe(BaseRecipe):
     def __init__(self, recipe):

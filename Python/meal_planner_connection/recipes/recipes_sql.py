@@ -8,7 +8,9 @@ from ..additional_tools import additional_tools_sql
 
 def get_shared_recipes_list():
     with connection.cursor() as cursor:
-        cursor.execute("SELECT recipe_id, recipe_name, recipe_description FROM recipes WHERE is_shared = TRUE;")
+        cursor.execute(
+            "SELECT recipe_id, recipe_name, recipe_description, username " +
+            "FROM recipes JOIN users ON users.user_id = recipes.author_id WHERE is_shared = TRUE;")
         rows = cursor.fetchall()
         return JsonResponse(rows, safe=False)
 
@@ -67,10 +69,10 @@ def add_new_recipe(recipe):
             for instruction in recipe['recipe_instructions']:
                 recipe_instructions.append(instruction['text'])
             cursor.execute(
-                "INSERT INTO recipes (recipe_id, recipe_name, recipe_description, " +
-                "recipe_cook_time, recipe_prep_time, recipe_instructions) " +
-                "VALUES (DEFAULT, %s, %s, %s, %s, %s) RETURNING recipe_id;",
-                [recipe['recipe_name'], recipe['recipe_description'], recipe['recipe_cook_time'], recipe['recipe_prep_time'], recipe_instructions]
+                "INSERT INTO recipes (recipe_id, recipe_name, recipe_description, recipe_cook_time, " +
+                "recipe_prep_time, recipe_instructions, is_shared, author_id) " +
+                "VALUES (DEFAULT, %s, %s, %s, %s, %s, TRUE, %s) RETURNING recipe_id;",
+                [recipe['recipe_name'], recipe['recipe_description'], recipe['recipe_cook_time'], recipe['recipe_prep_time'], recipe_instructions, recipe['author_id']]
             )
             recipe_id = cursor.fetchone()[0]
             ingredients_sql.add_recipe_ingredients(cursor, recipe_id, recipe['recipe_ingredients'])
