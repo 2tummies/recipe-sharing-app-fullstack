@@ -55,6 +55,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'username'
 
+    @property
     def id(self):
         return self.user_id
 

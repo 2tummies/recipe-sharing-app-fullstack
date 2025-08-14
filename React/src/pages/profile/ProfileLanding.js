@@ -1,10 +1,18 @@
+import { useContext } from 'react'
 import { View, Text, Button } from 'react-native'
-import useLogout from '../../hooks/users/useLogout'
+
+import { AuthContext } from '../../authentication/AuthContext'
+import LogoutHelper from '../../hooks/users/LogoutHelper'
 
 import GlobalStyles from '../../styles/GlobalStyles'
 
 const ProfileLanding = ({ navigation }) => {
-    const logout = useLogout()
+    const { setUserId, setUsername, setIsLoggedIn } = useContext(AuthContext)
+
+    const logout = async () => {
+        await LogoutHelper({setUserId, setUsername, setIsLoggedIn})
+    }
+
     return (
         <View style={GlobalStyles.global}>
             <Text style={GlobalStyles.fontStyle}>Profile Landing</Text>

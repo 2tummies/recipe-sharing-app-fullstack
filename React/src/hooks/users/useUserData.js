@@ -6,12 +6,15 @@ import * as Keychain from 'react-native-keychain'
 const useUserData = () => {
     const { setUserId, setUsername } = useContext(AuthContext)
 
-    const persistUserData = async ({ user_id, username }) => {
-        // TODO: Add in access and refresh tokens, token: token
-        await Keychain.setGenericPassword('auth', JSON.stringify({ userId: user_id }))
-        await AsyncStorage.setItem('username', username.toString())
-        setUserId(user_id.toString())
-        setUsername(username.toString())
+    const persistUserData = async (data) => {
+        try {
+            await Keychain.setGenericPassword('auth', JSON.stringify({ userId: data.user_id, access: data.access, refresh: data.refresh }))
+            await AsyncStorage.setItem('username', data.username.toString())
+            setUserId(data.user_id.toString())
+            setUsername(data.username.toString())
+        } catch(e) {
+            console.warn('Error in useUserData:', e)
+        }
     }
 
     return persistUserData

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import *
 
@@ -35,12 +36,12 @@ class RecipeTagsSerializer(serializers.ModelSerializer):
         model = RecipeTags
         fields = ['recipe_tag_id', 'recipe_tag_name']
 
-class BaseRecipeSerializer(serializers.ModelSerializer):
+class BaseRecipeSerializer(serializers.Serializer):
     class Meta:
         model = BaseRecipe
-        fields = ['recipe_id', 'recipe_name', 'recipe_description', 'recipe_cook_time', 'recipe_prep_time', 'recipe_instructions', 'author_id']
+        fields = ['recipe_id', 'recipe_name', 'recipe_description', 'recipe_cook_time', 'recipe_prep_time', 'recipe_instructions', 'author_username']
 
-class DetailedRecipeSerializer(serializers.ModelSerializer):
+class DetailedRecipeSerializer(BaseRecipeSerializer):
     recipe_ingredients = serializers.SerializerMethodField()
     recipe_additional_tools = serializers.SerializerMethodField()
     recipe_tags= serializers.SerializerMethodField()
@@ -56,3 +57,17 @@ class DetailedRecipeSerializer(serializers.ModelSerializer):
         ]
 
 # TODO: Add serializer for comprehensive list of recipes by user
+
+# Overrides
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['user_id'] = user.pk
+        token['username'] = user.username
+        return token
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data['user_id'] = self.user.pk
+        data['username'] = self.user.username
+        return data

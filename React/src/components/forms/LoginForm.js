@@ -1,19 +1,15 @@
 import { useState, useContext } from 'react'
 import { View, TextInput } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { AuthContext } from '../../authentication/AuthContext'
 
-import { login } from '../../api/user/UserApi'
-import useUserData from '../../hooks/users/useUserData'
+import useLogin from '../../hooks/users/useLogin'
 
 import PressableButton from '../sharedcomponents/PressableButton'
 import GlobalStyles from '../../styles/GlobalStyles'
 import LoginAndRegisterStyles from '../../styles/additionalstyles/LoginAndRegisterStyles'
 
 const LoginForm = () => {
-    const { setIsLoggedIn } = useContext(AuthContext)
-    const persistUserData = useUserData()
+    const login = useLogin()
     const { handleSubmit, control } = useForm({
         defaultValues: {
             'login-username': '',
@@ -29,16 +25,9 @@ const LoginForm = () => {
             password: data['login-password'],
         }
         try {
-            const result = await login(loginData)
-            if (result?.error) {
-                alert(result.error)
-                return
-            }
-            await AsyncStorage.setItem('userToken', 'mock-token')
-            await persistUserData(result)
-            setIsLoggedIn(true)
-        } catch (error) {
-            alert(error?.error || 'Login failed')
+            await login(loginData)
+        } catch (e) {
+            console.warn('Error logging in: ', e)
         } finally {
             setLoading(false)
         }

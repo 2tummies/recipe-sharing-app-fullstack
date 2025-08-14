@@ -1,10 +1,11 @@
 import { useState, useContext } from 'react'
 import { View, TextInput } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AuthContext } from '../../authentication/AuthContext'
 
 import { register } from '../../api/user/UserApi'
+import useUserData from '../../hooks/users/useUserData'
+import LogoutHelper from '../../hooks/users/LogoutHelper'
 
 import PressableButton from '../sharedcomponents/PressableButton'
 import GlobalStyles from '../../styles/GlobalStyles'
@@ -19,6 +20,10 @@ const RegisterForm = () => {
         }
     })
     const [loading, setLoading] = useState(false)
+    const persistUserData = useUserData()
+    const logout = async () => {
+        await LogoutHelper({setUserId, setUsername, setIsLoggedIn})
+    }
 
     const onSubmit = async (data) => {
         setLoading(true)
@@ -27,11 +32,14 @@ const RegisterForm = () => {
             password: data['register-password']
         }
         try {
-            await register(registerData)
-            await AsyncStorage.setItem('userToken', 'mock-token')
+            response = await register(registerData)
+            console.log(response)
+            await persistUserData(response)
             setIsLoggedIn(true)
         } catch(error) {
             alert(error)
+            setIsLoggedIn(false)
+            await logout()
         } finally {
             setLoading(false)
         }
