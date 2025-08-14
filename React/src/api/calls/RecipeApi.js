@@ -22,7 +22,7 @@ export const getUserRecipeList = async (userId) => {
 
 export const getSharedRecipeById = async (recipeId) => {
     try {
-        const res = await api.get(`/meal_planner_connection/recipes/${recipeId}`)
+        const res = await api.get(`/meal_planner_connection/recipes/${recipeId}/`)
         return res.data
     } catch(error) {
         console.log(error)
@@ -32,7 +32,7 @@ export const getSharedRecipeById = async (recipeId) => {
 
 export const addNewRecipe = (recipe) => {
     return (
-        api.post('/meal_planner_connection/recipes', recipe)
+        api.post('/meal_planner_connection/recipes/', recipe)
         .then(response => {
             console.log('successfully posted')
         })
