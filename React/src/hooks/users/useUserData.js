@@ -9,7 +9,7 @@ const useUserData = () => {
     const persistUserData = async (data) => {
         try {
             await Keychain.setGenericPassword('auth', JSON.stringify({ userId: data.user_id, access: data.access, refresh: data.refresh }))
-            await AsyncStorage.setItem('username', data.username.toString())
+            await AsyncStorage.setItem('username', data.username)
             setUserId(data.user_id.toString())
             setUsername(data.username.toString())
         } catch(e) {

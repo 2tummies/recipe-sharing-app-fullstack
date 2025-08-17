@@ -12,7 +12,7 @@ import GlobalStyles from '../../styles/GlobalStyles'
 import LoginAndRegisterStyles from '../../styles/additionalstyles/LoginAndRegisterStyles'
 
 const RegisterForm = () => {
-    const { setIsLoggedIn } = useContext(AuthContext)
+    const { setIsLoggedIn, setUserId, setUsername } = useContext(AuthContext)
     const { handleSubmit, control } = useForm({
         defaultValues: {
             'register-username': '',
