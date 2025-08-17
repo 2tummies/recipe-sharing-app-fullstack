@@ -1,4 +1,4 @@
-import api from '../api'
+import { api, authApi } from '../api'
 
 export const getAllSharedRecipes = async () => {
     try {
@@ -32,12 +32,12 @@ export const getSharedRecipeById = async (recipeId) => {
 
 export const addNewRecipe = (recipe) => {
     return (
-        api.post('/meal_planner_connection/recipes/', recipe)
+        authApi.post('/meal_planner_connection/recipes/', recipe)
         .then(response => {
             console.log('successfully posted')
         })
         .catch(error => {
-            console.log('error in post')
+            console.warn('error in post: ', error)
         })
     )
 }

@@ -1,4 +1,4 @@
-import api from '../api'
+import { api } from '../api'
 
 export const login = async (user) => {
     try {
@@ -18,6 +18,18 @@ export const register = async (user) => {
         return response.data
     } catch(e) {
         console.warn('Error in UserApi 2: ' + e)
-        throw new Error('error registering')
+        return null
+    }
+}
+
+export const refreshToken = async (token) => {
+    try {
+        const response = await api.post('meal_planner_connection/token/refresh/', {
+            refresh: token
+        })
+        return response.data
+    } catch (e) {
+        console.warn('Error getting refresh: ', e)
+        return null
     }
 }
