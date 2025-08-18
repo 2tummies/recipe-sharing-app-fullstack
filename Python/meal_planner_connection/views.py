@@ -35,7 +35,6 @@ class CreateUserView(APIView):
                 return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
             user = User.objects.create_user(**data)
             refresh = RefreshToken.for_user(user)
-            print(user.pk)
             return Response({
                 'user_id': user.pk,
                 'username': user.username,
