@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS recipes(
 CREATE TABLE IF NOT EXISTS user_recipe_list(
         user_id INT REFERENCES users,
         recipe_id INT REFERENCES recipes,
-        
+
         PRIMARY KEY (user_id, recipe_id)
 );
 
