@@ -112,15 +112,15 @@ class GetSharedRecipeById(generics.ListCreateAPIView):
         return recipes_sql.get_shared_recipe_by_id(recipe_id)
     
 class AddNewRecipe(generics.ListCreateAPIView):
-    serializer_class = DetailedRecipeSerializer
-
     def post(self, request):
         try:
-            recipes_sql.add_new_recipe(request.data)
-            return Response({'message':'Recipe created successfully'}, status=status.HTTP_201_CREATED)
+            serializer = CreateRecipeSerializer(data=request.data)
+            if serializer.is_valid():
+                recipe = serializer.save()
+                return Response({'recipe_id': recipe['recipe_id']}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'message':'Error creating recipe'}, status=status.HTTP_400_BAD_REQUEST)
-        
+            return Response({'message':f'Error creating recipe: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+
 # Overrides
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer

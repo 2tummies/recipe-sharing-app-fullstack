@@ -152,6 +152,7 @@ VALUES
 (DEFAULT, 'Tsp')
 ;
 
+-- Tags to add: vegetarian, vegan, quick
 INSERT INTO recipe_tags (recipe_tag_id, recipe_tag_name)
 VALUES
 (DEFAULT, 'Breakfast'),
