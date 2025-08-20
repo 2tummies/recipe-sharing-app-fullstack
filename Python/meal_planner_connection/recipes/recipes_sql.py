@@ -83,8 +83,49 @@ def add_new_recipe(recipe):
                 recipe_tags_sql.add_recipe_tags(cursor, recipe_id, recipe['recipe_tags'])
         except(Exception) as error:
             connection.rollback()
-            print(f"Error, recipe not created: {error}")
+            print(f'Error, recipe not created: {error}')
         else:
             connection.commit()
         finally:
             print('Task is finished, either success or failure')
+
+def get_saved_recipe_list(user_id):
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute(
+                "SELECT recipes.recipe_id, recipes.recipe_name, recipes.recipe_description " +
+                "FROM recipes JOIN user_recipe_list ON recipes.recipe_Id = user_recipe_list.recipe_id " +
+                "WHERE user_recipe_list.user_id = %s",
+                [user_id]
+            )
+            rows = cursor.fetchall()
+            return JsonResponse(rows, safe=False)
+        except(Exception) as error:
+            connection.rollback()
+            print(f'Error fetching recipes: {error}')
+
+def add_recipe_to_saved(user_id, recipe_id):
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute(
+                "INSERT INTO user_recipe_list VALUES (%s, %s)",
+                [user_id, recipe_id]
+            )
+        except(Exception) as error:
+            connection.rollback()
+            print(f'Error adding recipe: {error}')
+        else:
+            connection.commit()
+
+def remove_recipe_from_saved(user_id, recipe_id):
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute(
+                "DELETE FROM user_recipe_list WHERE user_id = %s AND recipe_id = %s",
+                [user_id, recipe_id]
+            )
+        except(Exception) as error:
+            connection.rollback()
+            print(f'Error removing recipe: {error}')
+        else:
+            connection.commit()

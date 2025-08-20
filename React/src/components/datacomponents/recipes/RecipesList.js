@@ -28,7 +28,7 @@ const RecipesList = ({
     }, [isSharedList, userId])
 
     const onPressFunction = (recipeId) => {
-        navigation.navigate('RecipeDetailsPage', {data: recipeId})
+        navigation.navigate('RecipeDetailsPage', {recipeId: recipeId})
     }
 
     const recipesArray = recipeList.map(recipe => {

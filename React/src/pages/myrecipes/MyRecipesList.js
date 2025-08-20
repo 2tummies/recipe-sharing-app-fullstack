@@ -1,9 +1,19 @@
-import { View, Text, Button } from 'react-native'
+import { useState, useContext } from 'react'
+import { View } from 'react-native'
+
+import { AuthContext } from '../../authentication/AuthContext'
+import RecipesList from '../../components/datacomponents/recipes/RecipesList'
+
+import TextElement from '../../components/sharedcomponents/TextElement'
 
 const MyRecipesList = () => {
+    const { userId } = useContext(AuthContext)
+    const [ isSharedList, setIsSharedList ] = useState(false)
+
     return (
         <View>
-            <Text>My Recipe List will go here</Text>
+            <TextElement textValue={'Saved Recipes'} headingStyle={2} textAlign={'center'}/>
+            <RecipesList isSharedList={isSharedList} userId={userId} />
         </View>
     )
 }

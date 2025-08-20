@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native'
 import { useContext } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+
 import { AuthContext } from '../authentication/AuthContext'
 
 const Home = () => {

@@ -1,6 +1,7 @@
 import { ScrollView, Text, View } from 'react-native'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 
+import { AuthContext } from '../../authentication/AuthContext'
 import { getSharedRecipeById } from '../../api/calls/RecipeApi'
 import RecipeName from '../../components/datacomponents/recipebasics/RecipeName'
 import RecipeDescription from '../../components/datacomponents/recipebasics/RecipeDescription'
@@ -18,7 +19,8 @@ import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
 const RecipeDetailsPage = ({
     route
 }) => {
-    const { data: recipeId } = route.params
+    const { isLoggedIn, userId } = useContext(AuthContext)
+    const { recipeId: recipeId } = route.params
     const [ recipe, setRecipe ] = useState()
     const [ isForm, setIsForm ] = useState(false)
     const [ isLoading, setIsLoading ] = useState(true)
@@ -40,6 +42,10 @@ const RecipeDetailsPage = ({
                 <Text>Loading...</Text>
                 :
                 <ScrollView style={GlobalStyles.pageContainer}>
+                    {
+                        isLoggedIn &&
+                            <Text>Add/Remove to/from my list Button</Text>
+                    }
                     <RecipeName isForm={isForm} recipeName={recipe.recipe_name}/>
                     <RecipeTagsWrapper isForm={isForm} recipeTagsList={recipe.recipe_tags} />
                     <RecipeDescription isForm={isForm} recipeDescription={recipe.recipe_description} />

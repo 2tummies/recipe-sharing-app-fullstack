@@ -12,7 +12,7 @@ export const getAllSharedRecipes = async () => {
 
 export const getUserRecipeList = async (userId) => {
     try {
-        const res = await api.get(`/meal_planner_connection/${userId}/`)
+        const res = await api.get(`/meal_planner_connection/user/${userId}/recipes/`)
         return res.data
     } catch(error) {
         console.log(error)

@@ -97,12 +97,29 @@ class CookingMethodListCreate(generics.ListCreateAPIView):
     def get(self, request):
         return cooking_methods_sql.get_all_cooking_methods()
     
-class SharedRecipesListCreate(generics.ListCreateAPIView):
+class SharedRecipes(generics.ListCreateAPIView):
     serializer_class = BaseRecipeSerializer
-    permission_classes = [ AllowAny ]
 
     def get(self, request):
-        return recipes_sql.get_shared_recipes_list()
+        data = recipes_sql.get_shared_recipes_list()
+        # TODO: change get_shared_recipes to filtered ones
+        # filter = request.query_params.get('filter')
+        # if filter == 'basic':
+            # data = recipes_sql.basic_shared_recipes_list()
+        # elif filter == 'advanced':
+            # data = recipes_sql.advanced_shared_recipes_list()
+        return Response(data)
+    
+    def post(self, request):
+        try:
+            if not request.user.is_authenticated:
+                raise
+            serializer = CreateRecipeSerializer(data=request.data)
+            if serializer.is_valid():
+                recipe = serializer.save()
+                return Response({'recipe_id': recipe['recipe_id']}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'message':f'Error creating recipe: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
 class GetSharedRecipeById(generics.ListCreateAPIView):
     serializer_class = DetailedRecipeSerializer
@@ -111,15 +128,25 @@ class GetSharedRecipeById(generics.ListCreateAPIView):
         recipe_id = kwargs['recipe_id']
         return recipes_sql.get_shared_recipe_by_id(recipe_id)
     
-class AddNewRecipe(generics.ListCreateAPIView):
-    def post(self, request):
+class EditUserRecipeList(generics.ListCreateAPIView):
+    def post(self, request, *args, **kwargs):
         try:
-            serializer = CreateRecipeSerializer(data=request.data)
-            if serializer.is_valid():
-                recipe = serializer.save()
-                return Response({'recipe_id': recipe['recipe_id']}, status=status.HTTP_201_CREATED)
+            user_id = kwargs['user_id']
+            recipe_id = request.data.get('recipe_id')
+            action = request.data.get('action')
+            if recipe_id != request.user.pk:
+                raise
+            if not user_id or recipe_id is None or action is None:
+                raise
+            if action == 'add':
+                recipes_sql.add_recipe_to_saved(user_id, recipe_id)
+                return Response({'message':'recipe successfully added'})
+            elif action == 'remove':
+                recipes_sql.remove_recipe_from_saved(user_id, recipe_id)
+                return Response({'message':'recipe successfully removed'})
         except Exception as e:
-            return Response({'message':f'Error creating recipe: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message':f'Error updating list: {str(e)}'})
+
 
 # Overrides
 class CustomTokenObtainPairView(TokenObtainPairView):
