@@ -4,14 +4,13 @@ import { View, Text, StyleSheet } from 'react-native'
 import { AuthContext } from '../authentication/AuthContext'
 
 const Home = () => {
-    const { isLoggedIn, userId, username } = useContext(AuthContext)
+    const { isLoggedIn, username } = useContext(AuthContext)
 
     return (
         <>
             {isLoggedIn ?
                     <View style={styles.tempStyle}>
                         <Text>Welcome, {username}</Text>
-                        <Text>user_id: {userId}</Text>
                     </View>
                 :
                     <View style={styles.tempStyle}>

@@ -9,6 +9,7 @@ export const login = async (user) => {
         return response.data
     } catch(e) {
         console.warn('Error in UserApi 1: ' + e)
+        return null
     }
 }
 

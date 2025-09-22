@@ -1,5 +1,5 @@
-import { View, TextInput, StyleSheet, Text } from 'react-native'
-import { useForm, Controller } from 'react-hook-form'
+import { View, StyleSheet } from 'react-native'
+import { useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 
 import { useContext } from 'react'
@@ -21,7 +21,7 @@ import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
 
 const AddRecipeForm = ({ redirOnSubmit }) => {
     const { handleSubmit } = useForm()
-    const { userId } = useContext(AuthContext)
+    const { username } = useContext(AuthContext)
     const [ loading, isLoading ] = useState(false)
     const [ isForm, setIsForm ] = useState(false)
 
@@ -88,7 +88,7 @@ const AddRecipeForm = ({ redirOnSubmit }) => {
             recipe_tags: recipeTagsList,
             recipe_ingredients: ingredientsList,
             recipe_instructions: instructionsList,
-            author_id: userId
+            author_username: username
         }
         try {
             console.log('console right before post')

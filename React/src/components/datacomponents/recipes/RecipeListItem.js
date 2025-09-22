@@ -12,7 +12,6 @@ const RecipeListItem = ({
                 isSharedList &&
                     <Text>Author: {recipe[3]}</Text>
             }
-            
         </View>
     )
 }

@@ -19,7 +19,7 @@ import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
 const RecipeDetailsPage = ({
     route
 }) => {
-    const { isLoggedIn, userId } = useContext(AuthContext)
+    const { isLoggedIn } = useContext(AuthContext)
     const { recipeId: recipeId } = route.params
     const [ recipe, setRecipe ] = useState()
     const [ isForm, setIsForm ] = useState(false)
