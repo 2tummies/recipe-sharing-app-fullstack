@@ -97,12 +97,17 @@ class CookingMethodListCreate(generics.ListCreateAPIView):
     def get(self, request):
         return cooking_methods_sql.get_all_cooking_methods()
     
-class SharedRecipes(generics.ListCreateAPIView):
+class Recipes(generics.ListCreateAPIView):
     serializer_class = BaseRecipeSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            return [IsAuthenticated()]
+        return [AllowAny()]
 
     def get(self, request):
         data = recipes_sql.get_shared_recipes_list()
-        # TODO: change get_shared_recipes to filtered ones
+        # TODO: change get_shared_recipes to filtered ones, maybe have front potentially send a filter object that is a dict w key value pairs of diff filters, create def to expand sql query line by line based on filters
         # filter = request.query_params.get('filter')
         # if filter == 'basic':
             # data = recipes_sql.basic_shared_recipes_list()
@@ -112,8 +117,6 @@ class SharedRecipes(generics.ListCreateAPIView):
     
     def post(self, request):
         try:
-            if not request.user.is_authenticated:
-                raise
             serializer = CreateRecipeSerializer(data=request.data)
             if serializer.is_valid():
                 recipe = serializer.save()
@@ -121,14 +124,14 @@ class SharedRecipes(generics.ListCreateAPIView):
         except Exception as e:
             return Response({'message':f'Error creating recipe: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
-class GetSharedRecipeById(generics.ListCreateAPIView):
+class RecipesById(generics.ListCreateAPIView):
     serializer_class = DetailedRecipeSerializer
 
     def get(self, request, *args, **kwargs):
         recipe_id = kwargs['recipe_id']
         return recipes_sql.get_shared_recipe_by_id(recipe_id)
     
-class EditUserRecipeList(generics.ListCreateAPIView):
+class UserRecipeList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         try:
             user_id = kwargs['user_id']

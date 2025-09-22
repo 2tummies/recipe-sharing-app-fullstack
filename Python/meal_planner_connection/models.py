@@ -123,7 +123,7 @@ class Recipe(models.Model):
 
 class RecipeRecipeTags(models.Model):
     recipe_id = models.ForeignKey(Recipe, models.DO_NOTHING, db_column='recipe_id')
-    recipe_tag_id = models.ForeignKey(Recipe, models.DO_NOTHING, db_column='recipe_tag_id')
+    recipe_tag_id = models.ForeignKey(RecipeTags, models.DO_NOTHING, db_column='recipe_tag_id')
 
     class Meta:
         managed = False
