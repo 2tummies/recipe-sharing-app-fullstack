@@ -4,7 +4,8 @@ import * as Keychain from 'react-native-keychain'
 const LogoutHelper = async ({
     setUserId,
     setUsername,
-    setIsLoggedIn
+    setIsLoggedIn,
+    setSavedRecipeList
 }) => {
     try {
         await Keychain.resetGenericPassword()
@@ -15,12 +16,14 @@ const LogoutHelper = async ({
     }
     try {
         await AsyncStorage.removeItem('username')
+        await AsyncStorage.removeItem('savedRecipeIds')
     } catch (e) {
         console.warn('Error in LogoutHelper: ', e)
     }
     setIsLoggedIn(false)
     setUserId(null)
     setUsername(null)
+    setSavedRecipeList([])
 }
 
 export default LogoutHelper

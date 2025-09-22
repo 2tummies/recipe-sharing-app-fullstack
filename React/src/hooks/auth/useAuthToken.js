@@ -8,10 +8,10 @@ import useUserData from '../users/useUserData'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export function useAuthToken() {
-    const { setIsLoggedIn, setUserId, setUsername } = useContext(AuthContext)
+    const { setIsLoggedIn, setUserId, setUsername, setSavedRecipeList } = useContext(AuthContext)
     const persistUserData = useUserData()
     const logout = async () => {
-        await LogoutHelper({setUserId, setUsername, setIsLoggedIn})
+        await LogoutHelper({setUserId, setUsername, setIsLoggedIn, setSavedRecipeList})
     }
     // TODO: Add loading/spinner
     const loadToken = async () => {
@@ -25,11 +25,13 @@ export function useAuthToken() {
                 } else {
                     const res = await refreshToken(parsed.refresh)
                     const username = AsyncStorage.getItem('username')
+                    const savedRecipeIds = AsyncStorage.getItem('savedRecipeIds')
                     const updatedCreds = {
                         user_id: parsed.userId,
                         username: username,
                         access: res.access,
-                        refresh: parsed.refresh
+                        refresh: parsed.refresh,
+                        savedRecipeList: savedRecipeIds
                     }
                     await persistUserData(updatedCreds)
                     return updatedCreds.access

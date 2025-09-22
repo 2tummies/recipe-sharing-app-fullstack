@@ -5,6 +5,7 @@ from ..recipe_tags import recipe_tags_sql
 from ..ingredients import ingredients_sql
 from ..cooking_methods import cooking_methods_sql
 from ..additional_tools import additional_tools_sql
+from ..users import users_sql
 
 def get_shared_recipes_list():
     with connection.cursor() as cursor:
@@ -72,7 +73,7 @@ def add_new_recipe(recipe):
                 "INSERT INTO recipes (recipe_id, recipe_name, recipe_description, recipe_cook_time, " +
                 "recipe_prep_time, recipe_instructions, is_shared, author_id) " +
                 "VALUES (DEFAULT, %s, %s, %s, %s, %s, TRUE, %s) RETURNING recipe_id;",
-                [recipe['recipe_name'], recipe['recipe_description'], recipe['recipe_cook_time'], recipe['recipe_prep_time'], recipe_instructions, recipe['author_id']]
+                [recipe['recipe_name'], recipe['recipe_description'], recipe['recipe_cook_time'], recipe['recipe_prep_time'], recipe_instructions, users_sql.get_id_by_username(recipe['author_username'])]
             )
             recipe_id = cursor.fetchone()[0]
             ingredients_sql.add_recipe_ingredients(cursor, recipe_id, recipe['recipe_ingredients'])

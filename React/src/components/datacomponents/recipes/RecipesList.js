@@ -3,15 +3,16 @@ import { useEffect, useState } from 'react'
 
 import { getAllSharedRecipes, getUserRecipeList } from '../../../api/calls/RecipeApi'
 import RecipeListItem from './RecipeListItem'
+import useUserId from '../../../hooks/auth/useUserId'
 
 import ComponentStyles from '../../../styles/additionalstyles/ComponentStyles'
 
 const RecipesList = ({
     navigation,
-    isSharedList,
-    userId
+    isSharedList
 }) => {
     const [ recipeList, setRecipeList ] = useState([])
+    const userId = useUserId()
 
     useEffect(() => {
         const fetchData = async () => {

@@ -7,12 +7,12 @@ import LogoutHelper from '../hooks/users/LogoutHelper'
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [ userId, setUserId ] = useState(null)
   const [ username, setUsername ] = useState(null)
   const [ isLoggedIn, setIsLoggedIn ] = useState(null)
+  const [ savedRecipeList, setSavedRecipeList ] = useState([])
 
   const logout = async () => {
-    await LogoutHelper({setUserId, setUsername, setIsLoggedIn})
+    await LogoutHelper({setUsername, setIsLoggedIn, setSavedRecipeList})
   }
 
   useEffect(() => {
@@ -23,8 +23,10 @@ export const AuthProvider = ({ children }) => {
         if (creds && creds.username === 'auth' && storedUsername) {
           setUsername(storedUsername)
           setIsLoggedIn(true)
-          const parsed = JSON.parse(creds.password)
-          setUserId(parsed.userId)
+          const storedRecipeIds = await AsyncStorage.getItem('savedRecipeIds')
+          if (storedRecipeIds) {
+            setSavedRecipeList(storedRecipeIds)
+          }
         } else {
           await logout()
         }
@@ -42,12 +44,12 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
-      userId, 
-      setUserId,
       username,
       setUsername,
       isLoggedIn,
-      setIsLoggedIn
+      setIsLoggedIn,
+      savedRecipeList,
+      setSavedRecipeList
     }}>
       {children}
     </AuthContext.Provider>

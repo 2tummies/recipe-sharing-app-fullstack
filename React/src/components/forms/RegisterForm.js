@@ -12,7 +12,7 @@ import GlobalStyles from '../../styles/GlobalStyles'
 import LoginAndRegisterStyles from '../../styles/additionalstyles/LoginAndRegisterStyles'
 
 const RegisterForm = () => {
-    const { setIsLoggedIn, setUserId, setUsername } = useContext(AuthContext)
+    const { setIsLoggedIn, setUserId, setUsername, setSavedRecipeList } = useContext(AuthContext)
     const { handleSubmit, control } = useForm({
         defaultValues: {
             'register-username': '',
@@ -22,7 +22,7 @@ const RegisterForm = () => {
     const [loading, setLoading] = useState(false)
     const persistUserData = useUserData()
     const logout = async () => {
-        await LogoutHelper({setUserId, setUsername, setIsLoggedIn})
+        await LogoutHelper({setUserId, setUsername, setIsLoggedIn, setSavedRecipeList})
     }
 
     const onSubmit = async (data) => {
