@@ -20,6 +20,18 @@ export const getUserRecipeList = async (userId) => {
     }
 }
 
+export const saveRecipeToUserRecipeList = (userId, recipeId) => {
+    return (
+        authApi.post(`/meal_planner_connection/user/${userId}/recipes/`, recipeId)
+        .then(response => {
+            console.log('successfully added or removed')
+        })
+        .catch(error => {
+            console.warn('error in post: ', error)
+        })
+    )
+}
+
 export const getSharedRecipeById = async (recipeId) => {
     try {
         const res = await api.get(`/meal_planner_connection/recipes/${recipeId}/`)
