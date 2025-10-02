@@ -23,7 +23,7 @@ const LogoutHelper = async ({
     setIsLoggedIn(false)
     setUserId(null)
     setUsername(null)
-    setSavedRecipeList([])
+    setSavedRecipeList(new Set())
 }
 
 export default LogoutHelper

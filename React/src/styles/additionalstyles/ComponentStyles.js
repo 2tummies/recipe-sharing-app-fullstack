@@ -10,6 +10,37 @@ const ComponentStyles = StyleSheet.create({
     descriptionWrapper: {
         marginVertical: $spacingbase,
     },
+    favoriteHeartContainer : {
+        width: 100,
+        height: 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+    },
+    favoriteHeartLeft: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        position: 'absolute',
+        left: 0,
+        top: 0,
+    },
+    favoriteHeartRight: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+    },
+    favoriteHeartUnderneath: {
+        width: 70,
+        height: 70,
+        transform: [{ rotate: '45deg' }],
+        position: 'absolute',
+        bottom: 0,
+        top: 20,
+    },
     flexItemsRow: {
         display: 'flex',
         flexDirection: 'row',

@@ -19,6 +19,7 @@ export function useAuthToken() {
             const currentTime = Date.now() / 1000
             const creds = await Keychain.getGenericPassword()
             const parsed = JSON.parse(creds.password)
+            // TODO: Add ifLoggedIn to not need to update all values if user is just updating tokens
             if (jwtDecode(parsed.refresh).exp > currentTime) {
                 if (jwtDecode(parsed.access).exp > currentTime) {
                     return parsed.access
@@ -31,7 +32,7 @@ export function useAuthToken() {
                         username: username,
                         access: res.access,
                         refresh: parsed.refresh,
-                        savedRecipeList: savedRecipeIds
+                        savedRecipeList: JSON.parse(savedRecipeIds)
                     }
                     await persistUserData(updatedCreds)
                     return updatedCreds.access

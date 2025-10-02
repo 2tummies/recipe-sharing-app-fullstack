@@ -12,6 +12,7 @@ import RecipeTagsWrapper from '../../components/datacomponents/recipetags/Recipe
 import CookingMethodsWrapper from '../../components/datacomponents/cookingmethods/CookingMethodsWrapper'
 import AdditionalToolsWrapper from '../../components/datacomponents/additionaltools/AdditionalToolsWrapper'
 import IngredientsWrapper from '../../components/datacomponents/ingredients/IngredientsWrapper'
+import FavoriteHeart from '../../components/sharedcomponents/FavoriteHeart'
 
 import GlobalStyles from '../../styles/GlobalStyles'
 import ComponentStyles from '../../styles/additionalstyles/ComponentStyles'
@@ -43,8 +44,10 @@ const RecipeDetailsPage = ({
                 :
                 <ScrollView style={GlobalStyles.pageContainer}>
                     {
-                        isLoggedIn &&
-                            <Text>Add/Remove to/from my list Button</Text>
+                        isLoggedIn && !isForm &&
+                            <>
+                                <FavoriteHeart recipeId={recipeId}/>
+                            </>
                     }
                     <RecipeName isForm={isForm} recipeName={recipe.recipe_name}/>
                     <RecipeTagsWrapper isForm={isForm} recipeTagsList={recipe.recipe_tags} />

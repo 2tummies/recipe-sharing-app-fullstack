@@ -20,9 +20,16 @@ export const getUserRecipeList = async (userId) => {
     }
 }
 
-export const saveRecipeToUserRecipeList = (userId, recipeId) => {
+export const saveRecipeToUserRecipeList = (userId, recipeId, action) => {
     return (
-        authApi.post(`/meal_planner_connection/user/${userId}/recipes/`, recipeId)
+        authApi.post(`/meal_planner_connection/user/${userId}/recipes/`,
+            recipeId,
+            {
+                params: {
+                    action: action
+                }
+            }
+        )
         .then(response => {
             console.log('successfully added or removed')
         })

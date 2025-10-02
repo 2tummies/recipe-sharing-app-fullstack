@@ -9,7 +9,7 @@ export const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
   const [ username, setUsername ] = useState(null)
   const [ isLoggedIn, setIsLoggedIn ] = useState(null)
-  const [ savedRecipeList, setSavedRecipeList ] = useState([])
+  const [ savedRecipeList, setSavedRecipeList ] = useState(new Set())
 
   const logout = async () => {
     await LogoutHelper({setUsername, setIsLoggedIn, setSavedRecipeList})
@@ -25,7 +25,8 @@ export const AuthProvider = ({ children }) => {
           setIsLoggedIn(true)
           const storedRecipeIds = await AsyncStorage.getItem('savedRecipeIds')
           if (storedRecipeIds) {
-            setSavedRecipeList(storedRecipeIds)
+            const parsedRecipeIds = JSON.parse(storedRecipeIds)
+            setSavedRecipeList(new Set(parsedRecipeIds))
           }
         } else {
           await logout()
